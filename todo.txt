@@ -1,0 +1,39 @@
+Ticket type required inputs and selections:
+    All should have:
+        1. title
+        2. AssignedTeam
+        3. InvolvedTeams
+        4. Attachment method- file upload
+        5. Description
+
+    Events:
+        TBD
+
+    Service Requests:
+        Completion Date
+        Should these be paged? Probably, maybe there could be a high prio task needed done.
+        Priority
+
+    Incidents:
+        Master Ticket
+        Page
+        Priority
+
+    Change:
+        Priority
+        ImplementationStart
+        ImplementationEnd
+        Need Permissions?
+        # Need specific roles for approving changes, - only the team manager should be able to approve.
+
+
+
+
+
+
+
+    IN CHANGES:
+        related ticket- causation ticket
+        add tasks for change, directly to team
+        only show changes to teams that have a task assigned
+        once task is completed, dont show change to team.
