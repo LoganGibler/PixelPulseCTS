@@ -58,7 +58,7 @@ const ServiceReqDash = ({ userData }) => {
   }
 
   return (
-    <div className="flex flex-col grow md:border-l-[10px] border-slate-700 md:w-[370px] lg:w-[650px]">
+    <div className="flex flex-col md:border-l-[10px] border-slate-700 grow md:w-[390px]">
       <div className="flex grow md:grow-0 py-2 text-white bg-slate-700 px-2">
         <AiOutlineTeam className="text-lg mt-0.5 mr-1.5" />
         <h1 className="font-semibold">Teams Service Requests</h1>
@@ -152,12 +152,15 @@ const ServiceReqDash = ({ userData }) => {
                       ) : (
                         <div className="flex grow justify-end">
                           {" "}
-                          <p className="text-blue-700 whitespace-nowrap">
-                            Complete By:{" "}
-                            <span className="text-black font-semibold whitespace-nowrap">
+                          <div className="text-blue-700 whitespace-nowrap flex">
+                            <p className="hidden md:flex whitespace-nowrap">
+                              Complete By:
+                            </p>
+
+                            <p className="text-black font-semibold whitespace-nowrap">
                               {ticketCompleteByDate}
-                            </span>
-                          </p>
+                            </p>
+                          </div>
                         </div>
                       )
                     ) : null}

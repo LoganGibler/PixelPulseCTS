@@ -2,6 +2,7 @@ import React from "react";
 import moment from "moment";
 
 const AuditLog = ({ auditLog }) => {
+  console.log(auditLog);
   const sortedLog = [...auditLog].sort(
     (a, b) => moment(b[1]).toDate() - moment(a[1]).toDate()
   );

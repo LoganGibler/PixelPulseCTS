@@ -15,8 +15,8 @@ const SelectFooterType = ({
       <p
         className={
           activeTicketFooter === "Comments"
-            ? "mr-4 text-blue-700 font-semibold hover:cursor-pointer mt-1"
-            : "mr-4 hover:cursor-pointer mt-1"
+            ? "mr-4 text-blue-700 font-semibold hover:cursor-pointer mt-2"
+            : "mr-4 hover:cursor-pointer mt-2"
         }
         onClick={() => {
           setActiveTicketFooter("Comments");
@@ -28,8 +28,8 @@ const SelectFooterType = ({
         <p
           className={
             activeTicketFooter === "Tasks"
-              ? "mr-4 text-blue-700 font-semibold hover:cursor-pointer mt-1"
-              : "mr-4 hover:cursor-pointer mt-1"
+              ? "mr-4 text-blue-700 font-semibold hover:cursor-pointer mt-2"
+              : "mr-4 hover:cursor-pointer mt-2"
           }
           onClick={() => {
             setActiveTicketFooter("Tasks");
@@ -42,8 +42,8 @@ const SelectFooterType = ({
       <p
         className={
           activeTicketFooter === "AuditLog"
-            ? "mr-4 text-blue-700 font-semibold hover:cursor-pointer mt-1"
-            : "mr-4 hover:cursor-pointer mt-1"
+            ? "mr-4 text-blue-700 font-semibold hover:cursor-pointer mt-2"
+            : "mr-4 hover:cursor-pointer mt-2"
         }
         onClick={() => {
           setActiveTicketFooter("AuditLog");
@@ -79,13 +79,15 @@ const SelectFooterType = ({
       ) : null}
       {activeTicketFooter === "Comments" ? (
         <div className="flex justify-end grow">
-          <button
-            className="border-2 flex border-green-500 px-2 py-1 rounded-md text-green-500 whitespace-nowrap"
-            onClick={() => setCreateCommentActive(true)}
-          >
-            Add Comment
-            <BiSolidCommentAdd className="ml-1.5 text-lg mt-[3px]" />
-          </button>
+          <div>
+            <button
+              className="border-2 flex border-green-500 px-2 py-0.5 rounded-md text-green-500 whitespace-nowrap"
+              onClick={() => setCreateCommentActive(true)}
+            >
+              Add Comment
+              <BiSolidCommentAdd className="ml-1.5 text-lg mt-[3px]" />
+            </button>
+          </div>
         </div>
       ) : null}
     </div>

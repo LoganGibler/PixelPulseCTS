@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import TicketHeader from "./TicketHeader";
 import CreateTask from "./CreateTask";
 import TicketComments from "./TicketComments";
@@ -10,6 +10,7 @@ import AuditLog from "./AuditLog";
 import ChangeTasks from "./ChangeTasks";
 import UploadFile from "./UploadFile";
 import TicketAttachments from "./TicketAttachments";
+import moment from "moment-timezone";
 
 const ChangeView = ({
   userData,
@@ -49,6 +50,18 @@ const ChangeView = ({
       "bg-orange-200 border-2 text-orange-500 border-orange-600  rounded-md px-1 text-center py-[1px] font-bold hover:cursor-pointer";
   }
 
+  const implementationStartDate = new Date(ticketValues.implementationStart);
+  const implementationStartEST = moment
+    .tz(implementationStartDate, "America/New_York")
+    .format("YYYY-MM-DDTHH:mm");
+
+  const implementationEndDate = new Date(ticketValues.implementationEnd);
+  const implementationEndEST = moment
+    .tz(implementationEndDate, "America/New_York")
+    .format("YYYY-MM-DDTHH:mm");
+
+  // console.log(implementationEndEST, implementationStartEST);
+
   return (
     <div className="bg-slate-50 grow flex flex-col py-2 sm:mx-2 mx-0">
       <TicketHeader
@@ -62,7 +75,7 @@ const ChangeView = ({
         fetchTicketInfo={fetchTicketInfo}
       />
       <div className="flex">
-        <div className="flex flex-col grow min-h-screen sm:px-[5rem] px-2">
+        <div className="flex flex-col grow min-h-screen md:px-[4rem] px-[0.5rem]">
           <div className="text-lg flex flex-col">
             <div className="flex grow mt-6 text-sm sm:text-base">
               <p className="pr-2 whitespace-nowrap mt-[2px] font-bold hidden sm:flex">
@@ -120,7 +133,7 @@ const ChangeView = ({
                       type="datetime-local"
                       value={
                         ticketValues.implementationEnd
-                          ? ticketValues.implementationStart.slice(0, 16)
+                          ? implementationStartEST
                           : ""
                       }
                       onChange={(e) =>
@@ -143,15 +156,16 @@ const ChangeView = ({
                       type="datetime-local"
                       value={
                         ticketValues.implementationEnd
-                          ? ticketValues.implementationEnd.slice(0, 16)
+                          ? implementationEndEST
                           : ""
                       }
-                      onChange={(e) =>
+                      onChange={(e) => {
                         setTicketValues({
                           ...ticketValues,
                           implementationEnd: e.target.value,
-                        })
-                      }
+                        });
+                        console.log(e.target.value);
+                      }}
                     ></input>
                   </div>
                 </div>
@@ -291,7 +305,7 @@ const ChangeView = ({
               setUploadComplete={setUploadComplete}
               uploadComplete={uploadComplete}
             />
-            <div className="flex pb-3 border-b-2 mb-2 border-blue-700">
+            <div className="flex pb-4 border-b-2 mb-2 border-blue-700">
               <SelectFooterType
                 activeTicketFooter={activeTicketFooter}
                 setActiveTicketFooter={setActiveTicketFooter}
@@ -315,18 +329,6 @@ const ChangeView = ({
             ) : null}
             {activeTicketFooter === "AuditLog" ? (
               <AuditLog auditLog={ticketValues.auditString} />
-            ) : null}
-            {activeTicketFooter === "Tasks" ? (
-              <ChangeTasks
-                userData={userData}
-                companyTeams={companyTeams}
-                tasks={tasks}
-                handleUpdateTask={handleUpdateTask}
-                fetchTicketInfo={fetchTicketInfo}
-                formatTimestamp={formatTimestamp}
-                createTaskActive={createTaskActive}
-                setCreateTaskActive={setCreateTaskActive}
-              />
             ) : null}
           </div>
         </div>

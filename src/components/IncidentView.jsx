@@ -1,0 +1,239 @@
+import React, { useState } from "react";
+import UploadFile from "./UploadFile";
+import TicketAttachments from "./TicketAttachments";
+import TicketHeader from "./TicketHeader";
+import TicketComments from "./TicketComments";
+import SelectFooterType from "./SelectFooterType";
+import AuditLog from "./AuditLog";
+
+const IncidentView = ({
+  userData,
+  companyTeams,
+  ticketValues,
+  setTicketValues,
+  activeTicketFooter,
+  setActiveTicketFooter,
+  handleAddTeamClick,
+  handleAddTeam,
+  handleRemoveTeam,
+  formatTimestamp,
+  fetchTicketInfo,
+}) => {
+  const [createCommentActive, setCreateCommentActive] = useState(false);
+  const [uploadComplete, setUploadComplete] = useState(false);
+  console.log(ticketValues);
+  if (ticketValues.status === "Active") {
+    var ticketStatusClass =
+      "bg-red-300 border-2 text-red-500 border-red-500  rounded-md px-1 text-center py-[1px] font-bold hover:cursor-pointer";
+  } else if (ticketValues.status === "Resolved") {
+    var ticketStatusClass =
+      "bg-green-100 border-2 text-green-600 border-green-500  rounded-md px-1 text-center py-[1px] font-bold hover:cursor-pointer";
+  } else if (ticketValues.status === "Waiting for 3rd Party") {
+    var ticketStatusClass =
+      "bg-yellow-100 border-2 text-yellow-500 border-yellow-500  rounded-md px-1 text-center py-[1px] font-bold hover:cursor-pointer";
+  } else if (ticketValues.status === "Submitted") {
+    var ticketStatusClass =
+      "bg-purple-300 border-2 text-purple-500 border-purple-600  rounded-md px-1 text-center py-[1px] font-bold hover:cursor-pointer";
+  } else if (ticketValues.status === "Closed") {
+    var ticketStatusClass =
+      "bg-stone-700 border-2 text-stone-100 border-stone-600  rounded-md px-1 text-center py-[1px] font-bold hover:cursor-pointer";
+  }
+  return (
+    <div className="bg-slate-50 grow flex flex-col py-2 sm:mx-2 mx-0 ">
+      <TicketHeader
+        userData={userData}
+        ticketValues={ticketValues}
+        setTicketValues={setTicketValues}
+        companyTeams={companyTeams}
+        handleRemoveTeam={handleRemoveTeam}
+        handleAddTeamClick={handleAddTeamClick}
+        fetchTicketInfo={fetchTicketInfo}
+      />
+
+      <div className="flex justify-center">
+        <div className="flex flex-col grow min-h-screen max-w-[1100px] md:px-[4rem] px-[0.5rem]">
+          <div className="flex flex-col text-lg">
+            <div className="flex grow mt-6 text-base sm:text-base">
+              <p className="pr-2 whitespace-nowrap mt-[2px] font-bold hidden sm:flex">
+                {ticketValues.type}
+              </p>
+              <p className=" font-bold mt-[1.5px] mr-2">
+                #{ticketValues.ticketNumber}
+              </p>
+
+              <input
+                className="flex grow bg-slate-200 px-3 overflow-hidden border-2 border-slate-300 rounded-md text-ellipsis w-100%"
+                value={ticketValues.title}
+                onChange={(e) =>
+                  setTicketValues({ ...ticketValues, title: e.target.value })
+                }
+              ></input>
+            </div>
+
+            <div className="flex flex-col sm:flex-row text-sm mt-8">
+              <div>
+                <select
+                  className={ticketStatusClass}
+                  value={ticketValues.status}
+                  onChange={(e) =>
+                    setTicketValues({ ...ticketValues, status: e.target.value })
+                  }
+                >
+                  <option value="Submitted" className="bg-slate-100 text-black">
+                    Submitted
+                  </option>
+
+                  <option value="Active" className="bg-slate-100 text-black">
+                    Active
+                  </option>
+                  <option value="Resolved" className="bg-slate-100 text-black">
+                    Resolved
+                  </option>
+                  <option value="Closed" className="bg-slate-100 text-black">
+                    Closed
+                  </option>
+                  <option
+                    value="Waiting for 3rd Party"
+                    className="bg-slate-100 text-black"
+                  >
+                    Waiting for 3rd Party
+                  </option>
+                </select>
+              </div>
+
+              <div className="flex grow mt-5 px-2 sm:mt-0">
+                <div className="flex sm:ml-4 text-base">
+                  <p className="border-b-2 border-blue-700">Priority: </p>
+                  <div className="ml-1 border-b-2 border-blue-700 pb-1">
+                    <select
+                      className="px-1 bg-slate-50"
+                      value={ticketValues.priority}
+                      onChange={(e) =>
+                        setTicketValues({
+                          ...ticketValues,
+                          priority: e.target.value,
+                        })
+                      }
+                    >
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="flex justify-end grow">
+                  <select
+                    className="border-b-2 border-blue-700 bg-slate-50 pb-1"
+                    value={ticketValues.team}
+                    onChange={(e) =>
+                      setTicketValues({ ...ticketValues, team: e.target.value })
+                    }
+                  >
+                    {companyTeams.length
+                      ? companyTeams.map((team, index) => {
+                          return (
+                            <option value={team} key={index}>
+                              {team}
+                            </option>
+                          );
+                        })
+                      : null}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex mt-8">
+              <textarea
+                className="bg-slate-200 text-sm rounded-md py-1 px-2 grow min-h-[250px] border-2 border-slate-300"
+                value={ticketValues.description}
+                onChange={(e) =>
+                  setTicketValues({
+                    ...ticketValues,
+                    description: e.target.value,
+                  })
+                }
+              ></textarea>
+            </div>
+
+            <div className="flex flex-wrap mt-6 text-sm">
+              <div className="flex mr-4 my-3">
+                <p className="flex mr-2 text-blue-700">Emergency: </p>
+                <input
+                  type="checkbox"
+                  className="hover:cursor-pointer"
+                  checked={ticketValues.emergency}
+                  onChange={(e) =>
+                    setTicketValues({
+                      ...ticketValues,
+                      emergency: !ticketValues.emergency,
+                    })
+                  }
+                ></input>
+              </div>
+              <div className="flex mr-3 my-3">
+                <p className="text-blue-700 mr-2">Master Ticket: </p>
+                <input
+                  className="hover:cursor-pointer"
+                  type="checkbox"
+                  checked={ticketValues.masterTicket}
+                  onChange={(e) =>
+                    setTicketValues({
+                      ...ticketValues,
+                      masterTicket: !ticketValues.masterTicket,
+                    })
+                  }
+                ></input>
+              </div>
+              <div className="flex justify-end grow">
+                <p className="text-blue-700 mt-[12px] ml-0 whitespace-nowrap">
+                  Submitter:{" "}
+                  <span className="text-black"> {ticketValues.submitter}</span>
+                </p>
+              </div>
+            </div>
+
+            <TicketAttachments
+              ticketNumber={ticketValues.ticketNumber}
+              uploadComplete={uploadComplete}
+              setUploadComplete={setUploadComplete}
+            />
+            <UploadFile
+              ticketNumber={ticketValues.ticketNumber}
+              fetchTicketInfo={fetchTicketInfo}
+              setUploadComplete={setUploadComplete}
+              uploadComplete={uploadComplete}
+            />
+            <div className="flex pb-3 border-b-2 mb-2 border-blue-700">
+              <SelectFooterType
+                activeTicketFooter={activeTicketFooter}
+                setActiveTicketFooter={setActiveTicketFooter}
+                setCreateCommentActive={setCreateCommentActive}
+                type={ticketValues.type}
+                fetchTicketInfo={fetchTicketInfo}
+              />
+            </div>
+            <div className="flex justify-center">
+              {activeTicketFooter === "Comments" ? (
+                <TicketComments
+                  ticketNumber={ticketValues.ticketNumber}
+                  formatTimestamp={formatTimestamp}
+                  userData={userData}
+                  createCommentActive={createCommentActive}
+                  setCreateCommentActive={setCreateCommentActive}
+                />
+              ) : null}
+              {activeTicketFooter === "AuditLog" ? (
+                <AuditLog auditLog={ticketValues.auditString} />
+              ) : null}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default IncidentView;

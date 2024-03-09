@@ -23,6 +23,7 @@ const TaskDashboard = ({ userData }) => {
   const handleTaskClaim = async (taskID, user) => {
     try {
       await claimTask(taskID, user);
+      await fetchUserTasks(userData.team);
     } catch (error) {
       throw error;
     }
@@ -96,9 +97,7 @@ const TaskDashboard = ({ userData }) => {
               <div
                 key={index}
                 className={elementClassname}
-                onClick={() =>
-                  navigate("/ticket/" + TicketCreation.linkedTicketNumber)
-                }
+                onClick={() => navigate("/ticket/" + task.linkedTicketNumber)}
               >
                 <div className="flex">
                   <p className="text-blue-700 whitespace-nowrap">
@@ -121,8 +120,8 @@ const TaskDashboard = ({ userData }) => {
                       <button
                         className="bg-gradient px-3 text-white rounded-md"
                         onClick={(e) => {
+                          e.stopPropagation();
                           handleTaskClaim(task._id, userData.name);
-                          fetchUserTasks(userData.team);
                         }}
                       >
                         Claim
