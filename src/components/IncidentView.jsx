@@ -5,6 +5,7 @@ import TicketHeader from "./TicketHeader";
 import TicketComments from "./TicketComments";
 import SelectFooterType from "./SelectFooterType";
 import AuditLog from "./AuditLog";
+import { MdRemoveCircle } from "react-icons/md";
 
 const IncidentView = ({
   userData,
@@ -21,7 +22,7 @@ const IncidentView = ({
 }) => {
   const [createCommentActive, setCreateCommentActive] = useState(false);
   const [uploadComplete, setUploadComplete] = useState(false);
-  console.log(ticketValues);
+  // console.log(ticketValues);
   if (ticketValues.status === "Active") {
     var ticketStatusClass =
       "bg-red-300 border-2 text-red-500 border-red-500  rounded-md px-1 text-center py-[1px] font-bold hover:cursor-pointer";
@@ -145,7 +146,56 @@ const IncidentView = ({
               </div>
             </div>
 
-            <div className="flex mt-8">
+            <div className="flex flex-col sm:flex-row mt-10 text-sm lg:hidden">
+              <div className="mt-[3px] flex">
+                <div>
+                  <p className="mt-0.5 mr-1 border-b-2 border-blue-700 pb-2 whitespace-nowrap">
+                    Add Teams for Visibility:{" "}
+                  </p>
+                </div>
+
+                <div>
+                  <select
+                    className="w-[100px] bg-slate-200 px-1 py-[2px] rounded-md"
+                    onChange={(e) => handleAddTeamClick(e, e.target.value)}
+                    value={companyTeams[0]}
+                  >
+                    {companyTeams.length
+                      ? companyTeams.map((team, index) => {
+                          if (ticketValues.involvedTeams.includes(team)) {
+                            return;
+                          }
+                          return (
+                            <option value={team} key={index}>
+                              {team}
+                            </option>
+                          );
+                        })
+                      : null}
+                  </select>
+                </div>
+              </div>
+              <div className="flex flex-wrap mt-3 sm:mt-0">
+                {ticketValues.involvedTeams.length
+                  ? ticketValues.involvedTeams.map((team, index) => {
+                      return (
+                        <div key={index}>
+                          {" "}
+                          <p className="text-sm mt-[1px] py-[3px] flex mx-[0px] border-[1px] bg-slate-700 text-white px-2 rounded-lg">
+                            {team}
+                            <MdRemoveCircle
+                              className="ml-1 mt-1 hover:cursor-pointer"
+                              onClick={(e) => handleRemoveTeam(e, team)}
+                            />
+                          </p>
+                        </div>
+                      );
+                    })
+                  : null}
+              </div>
+            </div>
+
+            <div className="flex mt-12">
               <textarea
                 className="bg-slate-200 text-sm rounded-md py-1 px-2 grow min-h-[250px] border-2 border-slate-300"
                 value={ticketValues.description}

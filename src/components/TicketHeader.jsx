@@ -35,26 +35,54 @@ const TicketHeader = ({
       </p>
 
       <div className="hidden lg:flex flex-wrap grow justify-center">
-        <div className="mt-0.5">
-          <select
-            className="w-[100px] bg-slate-200 px-1 py-[2px] rounded-md"
-            onChange={(e) => handleAddTeamClick(e, e.target.value)}
-            value={companyTeams[0]}
-          >
-            {companyTeams.length
-              ? companyTeams.map((team, index) => {
-                  if (ticketValues.involvedTeams.includes(team)) {
-                    return;
-                  }
-                  return (
-                    <option value={team} key={index}>
-                      {team}
-                    </option>
-                  );
-                })
-              : null}
-          </select>
-        </div>
+        {ticketValues.type === "Incident" ? (
+          <div className="mt-0.5 flex">
+            <p className="mt-0.5 mr-1">Add Teams for Visibility: </p>
+            <div>
+              <select
+                className="w-[100px] bg-slate-200 px-1 py-[2px] rounded-md"
+                onChange={(e) => handleAddTeamClick(e, e.target.value)}
+                value={companyTeams[0]}
+              >
+                {companyTeams.length
+                  ? companyTeams.map((team, index) => {
+                      if (ticketValues.involvedTeams.includes(team)) {
+                        return;
+                      }
+                      return (
+                        <option value={team} key={index}>
+                          {team}
+                        </option>
+                      );
+                    })
+                  : null}
+              </select>
+            </div>
+          </div>
+        ) : null}
+
+        {ticketValues.type === "Change" ? (
+          <div className="mt-0.5">
+            <select
+              className="w-[100px] bg-slate-200 px-1 py-[2px] rounded-md"
+              onChange={(e) => handleAddTeamClick(e, e.target.value)}
+              value={companyTeams[0]}
+            >
+              {companyTeams.length
+                ? companyTeams.map((team, index) => {
+                    if (ticketValues.involvedTeams.includes(team)) {
+                      return;
+                    }
+                    return (
+                      <option value={team} key={index}>
+                        {team}
+                      </option>
+                    );
+                  })
+                : null}
+            </select>
+          </div>
+        ) : null}
 
         {ticketValues.involvedTeams.length
           ? ticketValues.involvedTeams.map((team, index) => {

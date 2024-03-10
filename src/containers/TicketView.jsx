@@ -6,7 +6,7 @@ import { MdRemoveCircle } from "react-icons/md";
 import { getTicketTasks } from "../api/tasks";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { SiMicrosoftteams } from "react-icons/si";
-import { ChangeView, IncidentView } from "../components";
+import { ChangeView, IncidentView, ServiceRequestView } from "../components";
 import { updateTaskStatus, deleteTaskByID } from "../api/tasks";
 
 const TicketView = ({ userData, companyTeams }) => {
@@ -137,6 +137,21 @@ const TicketView = ({ userData, companyTeams }) => {
       ) : null}
       {ticketValues.type === "Incident" ? (
         <IncidentView
+          userData={userData}
+          companyTeams={companyTeams}
+          ticketValues={ticketValues}
+          setTicketValues={setTicketValues}
+          activeTicketFooter={activeTicketFooter}
+          setActiveTicketFooter={setActiveTicketFooter}
+          handleAddTeamClick={handleAddTeamClick}
+          handleAddTeam={handleAddTeam}
+          handleRemoveTeam={handleRemoveTeam}
+          formatTimestamp={formatTimestamp}
+          fetchTicketInfo={fetchTicketInfo}
+        />
+      ) : null}
+      {ticketValues.type === "Service Request" ? (
+        <ServiceRequestView
           userData={userData}
           companyTeams={companyTeams}
           ticketValues={ticketValues}

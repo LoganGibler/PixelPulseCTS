@@ -136,7 +136,7 @@ const TicketComments = ({
           );
         })
       ) : (
-        <div>
+        <div className="text-sm mt-3">
           {!createCommentActive ? (
             <div>No comments created....</div>
           ) : (

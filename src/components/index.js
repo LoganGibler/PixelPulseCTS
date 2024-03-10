@@ -22,4 +22,6 @@ export { default as SelectFooterType } from "./SelectFooterType";
 export { default as AuditLog } from "./AuditLog";
 export { default as ChangeTasks } from "./ChangeTasks";
 export { default as UploadFile } from "./UploadFile";
-export {default as IncidentView} from "./IncidentView"
+export { default as IncidentView } from "./IncidentView";
+export { default as ServiceRequestView } from "./ServiceRequestView";
+

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { MdRemoveCircle } from "react-icons/md";
 import { createTicket } from "../api/tickets";
 import { useNavigate } from "react-router-dom";
+import { storage } from "../firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const TicketCreation = ({
   userData,
@@ -25,6 +27,7 @@ const TicketCreation = ({
   const [emergency, setEmergency] = useState(false);
   const [elevatedAccess, setElevatedAccess] = useState("");
   const [accessRequired, setAccessRequired] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   let addedTeams = [];
 
@@ -120,13 +123,27 @@ const TicketCreation = ({
     }
   };
 
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+  };
+
+  const uploadFile = async (file, ticketNumber) => {
+    console.log("HERE IS PARAMS", file, ticketNumber);
+    const storageRef = ref(
+      storage,
+      `TicketAttachments/${ticketNumber}/${file.name}`
+    );
+    await uploadBytes(storageRef, file);
+  };
+
   return (
     <div className="absolute top-12 md:top-20 z-10 flex grow min-w-[350px] sm:min-w-[625px] md:min-w-[750px]">
       <form
         className="flex flex-col grow box-shadow px-4 py-5 bg-slate-100 rounded-md"
         onSubmit={async (e) => {
           e.preventDefault();
-          console.log("creat");
+          // console.log("creat");
           try {
             const newTicket = await createTicket(
               type,
@@ -146,8 +163,18 @@ const TicketCreation = ({
               emergency
             );
 
+            console.log(
+              "!!!!!!!!!!!!!!!",
+              newTicket.data.createdTicket.ticketNumber
+            );
+
             if (newTicket) {
+              await uploadFile(
+                selectedFile,
+                newTicket.data.createdTicket.ticketNumber
+              );
               setCreateTicketActive(false);
+              // upload attachment here, we will need the new ticket number
             }
           } catch (error) {
             console.error(error);
@@ -219,61 +246,65 @@ const TicketCreation = ({
           </div>
         ) : null}
 
-        <div className="flex mt-8 border-b-[2px] pb-2 border-blue-200">
-          <p className="font-semibold">Involved Teams: </p>
-          <div className="flex justify-end grow">
-            <select
-              defaultValue="Add Teams Here"
-              className="hover:cursor-pointer"
-              size={1}
-              id="team"
-              onChange={async (e) => {
-                handleAddTeamClick(e, await handleAddTeam());
-              }}
-            >
-              {companyTeams.length
-                ? companyTeams.map((team, index) => {
-                    if (involvedTeams.includes(team)) {
-                      return;
-                    }
-
-                    if (index === 0) {
-                      return <option key={index}>Add Teams Here</option>;
-                    }
-
-                    return (
-                      <option key={index} value={team}>
-                        {team}
-                      </option>
-                    );
-                  })
-                : null}
-            </select>
-          </div>
-        </div>
-        {involvedTeams.length > 0 ? (
-          <div className="flex flex-wrap justify-center mt-5 text-sm">
-            {involvedTeams.map((team, index) => {
-              return (
-                <div
-                  className="flex bg-slate-600 px-4 my-0.5 py-0.5 rounded-br-full rounded-tl-full text-white"
-                  key={index}
+        {type === "Change" || type === "Incident" ? (
+          <div>
+            <div className="flex mt-8 border-b-[2px] pb-2 border-blue-200">
+              <p className="font-semibold">Involved Teams: </p>
+              <div className="flex justify-end grow">
+                <select
+                  defaultValue="Add Teams Here"
+                  className="hover:cursor-pointer"
+                  size={1}
+                  id="team"
+                  onChange={async (e) => {
+                    handleAddTeamClick(e, await handleAddTeam());
+                  }}
                 >
-                  <p>{team}</p>
-                  <MdRemoveCircle
-                    className="text-lg mt-[1px] ml-2"
-                    onClick={async (e) => {
-                      await handleRemoveTeam(e, team);
-                    }}
-                  />
-                </div>
-              );
-            })}
+                  {companyTeams.length
+                    ? companyTeams.map((team, index) => {
+                        if (involvedTeams.includes(team)) {
+                          return;
+                        }
+
+                        if (index === 0) {
+                          return <option key={index}>Add Teams Here</option>;
+                        }
+
+                        return (
+                          <option key={index} value={team}>
+                            {team}
+                          </option>
+                        );
+                      })
+                    : null}
+                </select>
+              </div>
+            </div>
+            {involvedTeams.length > 0 ? (
+              <div className="flex flex-wrap justify-center mt-5 text-sm">
+                {involvedTeams.map((team, index) => {
+                  return (
+                    <div
+                      className="flex bg-slate-600 px-4 my-0.5 py-0.5 rounded-br-full rounded-tl-full text-white"
+                      key={index}
+                    >
+                      <p>{team}</p>
+                      <MdRemoveCircle
+                        className="text-lg mt-[1px] ml-2"
+                        onClick={async (e) => {
+                          await handleRemoveTeam(e, team);
+                        }}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            ) : null}
           </div>
         ) : null}
 
         {type === "Service Request" ? (
-          <div className="flex mt-6">
+          <div className="flex mt-8">
             <p className="font-semibold">Complete By:</p>
             <input
               maxLength={50}
@@ -360,7 +391,7 @@ const TicketCreation = ({
         ) : null}
 
         {type !== "Event" && type !== "Change" ? (
-          <div className="flex border-b-[2px] pb-2 border-blue-200 mt-7 justify-between">
+          <div className="flex border-b-[2px] pb-2 border-blue-200 mt-9 justify-between">
             <div className="flex">
               <p className="font-semibold">Priority: </p>
               <select
@@ -409,7 +440,14 @@ const TicketCreation = ({
         </div>
 
         <div className="flex mt-5 px-1">
-          <input type="file" className="text-sm max-w-[180px]"></input>
+          <p className="text-sm border-b-2 border-blue-700 mr-2">
+            Upload Attachment:{" "}
+          </p>
+          <input
+            type="file"
+            className="text-sm max-w-[180px]"
+            onChange={handleFileChange}
+          ></input>
           <div className="flex justify-end grow">
             <button className="border-2 px-3 text-green-500 rounded-md border-green-400">
               Create
