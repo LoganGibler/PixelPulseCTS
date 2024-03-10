@@ -3,7 +3,12 @@ import { MdRemoveCircle } from "react-icons/md";
 import { createTicket } from "../api/tickets";
 import { useNavigate } from "react-router-dom";
 
-const TicketCreation = ({ userData, companyTeams }) => {
+const TicketCreation = ({
+  userData,
+  companyTeams,
+  createTicketActive,
+  setCreateTicketActive,
+}) => {
   const navigate = useNavigate();
   const [type, setType] = useState("Event");
   const [title, setTitle] = useState("");
@@ -116,11 +121,12 @@ const TicketCreation = ({ userData, companyTeams }) => {
   };
 
   return (
-    <div className="flex justify-center bg-slate-700">
+    <div className="absolute top-12 md:top-20 z-10 flex grow min-w-[350px] sm:min-w-[625px] md:min-w-[750px]">
       <form
-        className="flex flex-col grow box-shadow my-2 mx-2 px-2 py-3 rounded-sm max-w-[1000px] md:p-8 md:mt-[2rem] lg:p-10 lg:mt-[3rem] bg-white"
+        className="flex flex-col grow box-shadow px-4 py-5 bg-slate-100 rounded-md"
         onSubmit={async (e) => {
           e.preventDefault();
+          console.log("creat");
           try {
             const newTicket = await createTicket(
               type,
@@ -141,16 +147,15 @@ const TicketCreation = ({ userData, companyTeams }) => {
             );
 
             if (newTicket) {
-              navigate("/Dashboard");
+              setCreateTicketActive(false);
             }
-            // console.log(newTicket);
           } catch (error) {
             console.error(error);
           }
         }}
       >
         <div
-          className="flex border-b-[2px] pb-2 border-blue-200"
+          className="flex border-b-[2px] pb-2 border-blue-200 grow"
           onChange={handleTypeSelect}
         >
           <p className="font-semibold mt-0.5">Ticket Type: </p>
@@ -406,7 +411,7 @@ const TicketCreation = ({ userData, companyTeams }) => {
         <div className="flex mt-5 px-1">
           <input type="file" className="text-sm max-w-[180px]"></input>
           <div className="flex justify-end grow">
-            <button className="border-2 px-3 rounded-md border-green-400">
+            <button className="border-2 px-3 text-green-500 rounded-md border-green-400">
               Create
             </button>
           </div>

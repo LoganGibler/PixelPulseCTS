@@ -13,6 +13,8 @@ const Navbar = ({
   setIsLoggedIn,
   moreMenuActive,
   setMoreMenuActive,
+  createTicketActive,
+  setCreateTicketActive,
 }) => {
   const [username, setUsername] = useState("");
   const [team, setTeam] = useState("");
@@ -60,7 +62,7 @@ const Navbar = ({
       <div className="hidden md:flex grow justify-end text-slate-100 font-semibold mt-[4px] ml-0">
         <p
           className="mx-1.5 px-2 hover:text-slate-200 hover:cursor-pointer"
-          onClick={(e) => navigate("/createTicket")}
+          onClick={(e) => setCreateTicketActive(true)}
         >
           Create Ticket
         </p>

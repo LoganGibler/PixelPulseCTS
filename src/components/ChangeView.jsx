@@ -327,6 +327,18 @@ const ChangeView = ({
                 setCreateCommentActive={setCreateCommentActive}
               />
             ) : null}
+            {activeTicketFooter === "Tasks" ? (
+              <ChangeTasks
+                userData={userData}
+                companyTeams={companyTeams}
+                tasks={tasks}
+                handleUpdateTask={handleUpdateTask}
+                fetchTicketInfo={fetchTicketInfo}
+                formatTimestamp={formatTimestamp}
+                createTaskActive={createCommentActive}
+                setCreateTaskActive={setCreateTaskActive}
+              />
+            ) : null}
             {activeTicketFooter === "AuditLog" ? (
               <AuditLog auditLog={ticketValues.auditString} />
             ) : null}

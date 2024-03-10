@@ -189,7 +189,8 @@ const IncidentDash = ({ userData }) => {
                           <div className="flex grow justify-end">
                             <button
                               className="py-0 px-4 border-[1px] font-semibold rounded-lg bg-gradient text-white hover:cursor-pointer"
-                              onClick={async () => {
+                              onClick={async (e) => {
+                                e.stopPropagation();
                                 await claimTicket(ticket._id, userData);
                                 await fetchTeamsIncidents(userData);
                               }}

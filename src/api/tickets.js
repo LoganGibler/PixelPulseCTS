@@ -1,7 +1,7 @@
 import axios from "axios";
 // const url = "https://pixelpulseapi-0sgu.onrender.com";
 const url = "http://localhost:8000";
-import moment from "moment";
+
 
 const headersTemp = document.cookie.split(";"); // <-- this get all cookies saves and splits them in the array.
 const finalHeaders = {};
@@ -78,6 +78,7 @@ export async function createTicket(
   emergency
 ) {
   try {
+    console.log("trying to create ticket");
     const response = await axios.post(`${url}/ticket/createTicket`, {
       title: title,
       type: type,
@@ -95,7 +96,7 @@ export async function createTicket(
       relatedTicket: relatedTicket,
       emergency: emergency,
     });
-    // console.log(response);
+    console.log(response);
     return response;
   } catch (error) {
     console.log(error);

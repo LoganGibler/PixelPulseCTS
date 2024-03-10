@@ -27,6 +27,7 @@ function App() {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [moreMenuActive, setMoreMenuActive] = useState(false);
+  const [createTicketActive, setCreateTicketActive] = useState(false);
 
   async function fetchCompanyTeams() {
     const fetchedTeams = await getCompanyTeams();
@@ -78,6 +79,8 @@ function App() {
                   setIsLoggedIn={setIsLoggedIn}
                   moreMenuActive={moreMenuActive}
                   setMoreMenuActive={setMoreMenuActive}
+                  createTicketActive={createTicketActive}
+                  setCreateTicketActive={setCreateTicketActive}
                 />
                 <AllIncidents userData={userData} />
               </div>,
@@ -97,6 +100,8 @@ function App() {
                   setIsLoggedIn={setIsLoggedIn}
                   moreMenuActive={moreMenuActive}
                   setMoreMenuActive={setMoreMenuActive}
+                  createTicketActive={createTicketActive}
+                  setCreateTicketActive={setCreateTicketActive}
                 />
                 <AllChanges userData={userData} />
               </div>,
@@ -116,6 +121,8 @@ function App() {
                   setIsLoggedIn={setIsLoggedIn}
                   moreMenuActive={moreMenuActive}
                   setMoreMenuActive={setMoreMenuActive}
+                  createTicketActive={createTicketActive}
+                  setCreateTicketActive={setCreateTicketActive}
                 />
                 <AllServiceRequests userData={userData} />
               </div>,
@@ -134,6 +141,8 @@ function App() {
                   setIsLoggedIn={setIsLoggedIn}
                   moreMenuActive={moreMenuActive}
                   setMoreMenuActive={setMoreMenuActive}
+                  createTicketActive={createTicketActive}
+                  setCreateTicketActive={setCreateTicketActive}
                 />
                 <div className="flex">
                   <HomeDashboard userData={userData} />
@@ -153,31 +162,14 @@ function App() {
                   showUserMenu={showUserMenu}
                   moreMenuActive={moreMenuActive}
                   setMoreMenuActive={setMoreMenuActive}
+                  createTicketActive={createTicketActive}
+                  setCreateTicketActive={setCreateTicketActive}
                 />
                 <UserList />
               </div>,
             ]}
           />
-          <Route
-            path="/createTicket"
-            element={[
-              <div key="createTicketpage" className="bg-slate-700 min-h-screen">
-                <Navbar
-                  mobileMenuActive={mobileMenuActive}
-                  setMobileMenuActive={setMobileMenuActive}
-                  userData={userData}
-                  setShowUserMenu={setShowUserMenu}
-                  showUserMenu={showUserMenu}
-                  moreMenuActive={moreMenuActive}
-                  setMoreMenuActive={setMoreMenuActive}
-                />
-                <TicketCreation
-                  userData={userData}
-                  companyTeams={companyTeams}
-                />
-              </div>,
-            ]}
-          />
+
           <Route
             path="/ticket/:ticketNumber"
             element={[
@@ -190,25 +182,41 @@ function App() {
                   showUserMenu={showUserMenu}
                   moreMenuActive={moreMenuActive}
                   setMoreMenuActive={setMoreMenuActive}
+                  createTicketActive={createTicketActive}
+                  setCreateTicketActive={setCreateTicketActive}
                 />
                 <TicketView userData={userData} companyTeams={companyTeams} />
               </div>,
             ]}
           />
         </Routes>
+        {createTicketActive ? (
+          <div className="flex justify-center">
+            <TicketCreation
+              userData={userData}
+              companyTeams={companyTeams}
+              createTicketActive={createTicketActive}
+              setCreateTicketActive={setCreateTicketActive}
+            />
+          </div>
+        ) : null}
         {mobileMenuActive ? (
           <MobileMenu
             mobileMenuActive={mobileMenuActive}
             setMobileMenuActive={setMobileMenuActive}
           />
         ) : null}
-        {mobileMenuActive || showUserMenu || moreMenuActive ? (
+        {mobileMenuActive ||
+        showUserMenu ||
+        moreMenuActive ||
+        createTicketActive ? (
           <div
             className="overlay1"
             onClick={() => {
               setMobileMenuActive(false);
               setShowUserMenu(false);
               setMoreMenuActive(false);
+              setCreateTicketActive(false);
             }}
           ></div>
         ) : null}
