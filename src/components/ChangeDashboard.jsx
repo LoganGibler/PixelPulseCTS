@@ -89,6 +89,23 @@ const ChangeDashboard = ({ userData }) => {
             }
             const ticketStartDate = formatTimestamp(ticket.implementationStart);
 
+            if (ticket.status === "Active") {
+              var ticketStatusClass =
+                "flex px-4 py-0.5 border-2 rounded-md bg-red-300 text-red-700 border-red-600";
+            } else if (ticket.status === "Complete") {
+              var ticketStatusClass =
+                "flex px-4 py-0.5 border-2 rounded-md bg-green-300 text-green-700 border-green-600";
+            } else if (ticket.status === "Submitted") {
+              var ticketStatusClass =
+                "flex px-4 py-0.5 border-2 rounded-md bg-purple-300 text-purple-700 border-purple-600";
+            } else if (ticket.status === "Accepted") {
+              var ticketStatusClass =
+                "flex px-4 py-0.5 border-2 rounded-md bg-yellow-300 text-yellow-700 border-yellow-600";
+            } else if (ticket.status === "PendingApproval") {
+              var ticketStatusClass =
+                "flex px-4 py-0.5 border-2 rounded-md bg-orange-300 text-orange-700 border-orange-600";
+            }
+
             return (
               <div
                 key={index}
@@ -97,9 +114,14 @@ const ChangeDashboard = ({ userData }) => {
               >
                 <div className="flex overflow-hidden text-ellipsis">
                   <p>#{ticket.ticketNumber}</p>
-                  <p className="truncated-text-sm pl-3 overflow-hidden font-semibold">
+                  <p className="truncated-text-sm pl-3 pr-3 overflow-hidden font-semibold">
                     {ticket.title}
                   </p>
+                  <div className="sm:flex hidden justify-end grow">
+                    <div className="">
+                      <p className={ticketStatusClass}>{ticket.status}</p>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="flex mt-2.5 text-sm">

@@ -105,6 +105,24 @@ const IncidentDash = ({ userData }) => {
                   var elementClassname =
                     "flex px-3 py-4 border-b-[1px] border-t-0 bg-gray-200 grow text-sm hover:cursor-pointer";
                 }
+
+                if (ticket.status === "Active") {
+                  var ticketStatusClass =
+                    "flex px-4 py-0.5 border-2 rounded-md bg-red-300 text-red-700 border-red-600";
+                } else if (ticket.status === "Resolved") {
+                  var ticketStatusClass =
+                    "flex px-4 py-0.5 border-2 rounded-md bg-green-300 text-green-700 border-green-600";
+                } else if (ticket.status === "Submitted") {
+                  var ticketStatusClass =
+                    "flex px-4 py-0.5 border-2 rounded-md bg-purple-300 text-purple-700 border-purple-600";
+                } else if (ticket.status === "Waiting for 3rd Party") {
+                  var ticketStatusClass =
+                    "flex px-4 py-0.5 border-2 rounded-md bg-yellow-300 text-yellow-700 border-yellow-600";
+                }
+
+                if (ticket.status === "Closed") {
+                  return;
+                }
                 return (
                   <div
                     className={elementClassname}
@@ -119,18 +137,13 @@ const IncidentDash = ({ userData }) => {
                           {ticket.title}
                         </p>
                         {ticket.userAssigned !== "" ? (
-                          <div className="lg:hidden flex grow justify-end">
-                            <FaArrowRightLong className="mt-[3px] text-orange-600" />
-                          </div>
-                        ) : null}
-                        {ticket.userAssigned !== "" ? (
-                          <div className="hidden lg:flex grow justify-end">
-                            <p className="text-blue-700 flex pl-2">
-                              Status:{" "}
-                              <span className="text-black pl-1 whitespace-nowrap">
+                          <div className="flex grow justify-end">
+                            <div>
+                              {" "}
+                              <p className={ticketStatusClass}>
                                 {ticket.status}
-                              </span>
-                            </p>
+                              </p>
+                            </div>
                           </div>
                         ) : null}
                       </div>

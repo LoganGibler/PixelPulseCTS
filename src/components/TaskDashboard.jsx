@@ -93,6 +93,21 @@ const TaskDashboard = ({ userData }) => {
               var elementClassname =
                 "text-sm px-3 py-3 border-b-[1px] hover:cursor-pointer bg-gray-200";
             }
+
+            if (task.status === "Active") {
+              var taskStatusClass =
+                "flex px-4 py-0.5 text-xs border-2 rounded-md bg-red-300 text-red-700 border-red-600";
+            } else if (task.status === "Complete") {
+              var taskStatusClass =
+                "flex px-4 py-0.5 text-xs border-2 rounded-md bg-green-300 text-green-700 border-green-600";
+            } else if (task.status === "Submitted") {
+              var taskStatusClass =
+                "flex px-4 py-0.5 text-xs border-2 rounded-md bg-purple-300 text-purple-700 border-purple-600";
+            } else if (task.status === "Accepted") {
+              var taskStatusClass =
+                "flex px-4 py-0.5 text-xs border-2 rounded-md bg-yellow-300 text-yellow-700 border-yellow-600";
+            }
+
             return (
               <div
                 key={index}
@@ -129,16 +144,16 @@ const TaskDashboard = ({ userData }) => {
                     </div>
                   </div>
                 ) : (
-                  <div className="flex px-0 mt-3">
+                  <div className="flex px-0 mt-2.5">
                     <p className="text-blue-700">
                       Assigned to:{" "}
                       <span className="text-black">{task.assignedPerson}</span>
                     </p>
                     <div className="flex justify-end grow">
-                      <p className="text-blue-700">
-                        Status:
-                        <span className="pl-1 text-black">{task.status}</span>
-                      </p>
+                      <div>
+                        {" "}
+                        <p className={taskStatusClass}>{task.status}</p>
+                      </div>
                     </div>
                   </div>
                 )}

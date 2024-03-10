@@ -83,6 +83,23 @@ const AllChanges = ({ userData }) => {
               "bg-gray-200 flex flex-col px-3 py-3.5 hover:cursor-pointer";
           }
 
+          if (ticket.status === "Active") {
+            var ticketStatusClass =
+              "flex px-4 py-0.5 border-2 rounded-md bg-red-300 text-red-700 border-red-600 ";
+          } else if (ticket.status === "Complete") {
+            var ticketStatusClass =
+              "flex px-4 py-0.5 border-2 rounded-md bg-green-300 text-green-700 border-green-600 ";
+          } else if (ticket.status === "Submitted") {
+            var ticketStatusClass =
+              "flex px-4 py-0.5 border-2 rounded-md bg-purple-300 text-purple-700 border-purple-600 ";
+          } else if (ticket.status === "Accepted") {
+            var ticketStatusClass =
+              "flex px-4 py-0.5 border-2 rounded-md bg-yellow-300 text-yellow-700 border-yellow-600 ";
+          } else if (ticket.status === "PendingApproval") {
+            var ticketStatusClass =
+              "flex px-4 py-0.5 border-2 rounded-md bg-orange-300 text-orange-700 border-orange-600 ";
+          }
+
           return (
             <div
               className={ticketContainerClass}
@@ -94,34 +111,33 @@ const AllChanges = ({ userData }) => {
                 <p className="overflow-hidden text-ellipsis pr-3 whitespace-nowrap font-semibold">
                   {ticket.title}
                 </p>
-                <div className="justify-end grow hidden sm:flex">
+                <div className="justify-end grow flex font-semibold">
                   <p className="text-blue-700 whitespace-nowrap">
                     <span className="text-black"></span>
                   </p>
-                  <p className="text-blue-700 mr-2 w-[170px]">
+                  <p className="text-blue-700 mr-2 w-[170px] hidden sm:flex">
                     Start:{" "}
-                    <span className="text-black">{formatedStartTime}</span>
+                    <span className="text-black ml-1">{formatedStartTime}</span>
                   </p>
-                  <p className="text-blue-700 mr-2 w-[170px] hidden md:flex">
+                  <p className="text-blue-700 mr-2 w-[170px] hidden lg:flex">
                     End:{" "}
                     <span className="text-black pl-1">{formatedEndTime}</span>
                   </p>
-                  <p className="text-blue-700 flex whitespace-nowrap">
-                    Status:{" "}
-                    <span className="text-black pl-1 whitespace-nowrap w-[120px]">
-                      {ticket.status}
-                    </span>
-                  </p>
+                  <div className="w-[130px] justify-end hidden md:flex">
+                    {" "}
+                    <p className={ticketStatusClass}>{ticket.status}</p>
+                  </div>
                 </div>
               </div>
 
               <div className="flex mt-2 text-xs">
-                <p className="text-blue-700 whitespace-nowrap text-ellipsis overflow-hidden">
-                  Involved Teams:{" "}
+                <p className="text-blue-700 whitespace-nowrap py-1 text-ellipsis overflow-hidden">
+                  <span className="font-semibold"> Involved Teams: </span>
+
                   {ticket.involvedTeams.map((team, index) => {
                     return (
                       <span
-                        className="text-black px-2 border-r-[2px] font-semibold border-green-500"
+                        className="text-slate-100 bg-slate-700 py-[2px] px-2 mx-1 rounded-full border-r-[2px] font-semibold "
                         key={index}
                       >
                         {team}
@@ -130,7 +146,7 @@ const AllChanges = ({ userData }) => {
                   })}
                 </p>
                 {/* <div className="flex justify-end grow"> */}
-                <p className="text-blue-700 text-xs ml-4 hidden sm:flex">
+                <p className="text-blue-700 font-semibold text-xs mt-1 ml-8 hidden sm:flex">
                   Submitter:
                   <span className="text-black pl-1">
                     {ticket.submitter}

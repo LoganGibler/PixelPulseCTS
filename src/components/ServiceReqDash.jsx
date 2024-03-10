@@ -96,6 +96,24 @@ const ServiceReqDash = ({ userData }) => {
               }
               const ticketCompleteByDate = formatTimestamp(ticket.completeBy);
               const ticketCreationDate = formatTimestamp(ticket.dateCreated);
+
+              if (ticket.status === "Active") {
+                var ticketStatusClass =
+                  "flex px-4 py-0.5 border-2 rounded-md bg-red-300 text-red-700 border-red-600";
+              } else if (ticket.status === "Completed") {
+                var ticketStatusClass =
+                  "flex px-4 py-0.5 border-2 rounded-md bg-green-300 text-green-700 border-green-600";
+              } else if (ticket.status === "Submitted") {
+                var ticketStatusClass =
+                  "flex px-4 py-0.5 border-2 rounded-md bg-purple-300 text-purple-700 border-purple-600";
+              } else if (ticket.status === "Accepted") {
+                var ticketStatusClass =
+                  "flex px-4 py-0.5 border-2 rounded-md bg-yellow-300 text-yellow-700 border-yellow-600";
+              } else if (ticket.status === "PendingApproval") {
+                var ticketStatusClass =
+                  "flex px-4 py-0.5 border-2 rounded-md bg-orange-300 text-orange-700 border-orange-600";
+              }
+
               return (
                 <div
                   className={elementClassname}
@@ -107,6 +125,11 @@ const ServiceReqDash = ({ userData }) => {
                     <p className="truncated-text-sm font-semibold">
                       {ticket.title}
                     </p>
+                    <div className="flex justify-end grow">
+                      <div>
+                        <p className={ticketStatusClass}>{ticket.status}</p>
+                      </div>
+                    </div>
                   </div>
                   <div className="text-xs mt-[8px] px-2 flex py-1">
                     {ticket.userAssigned === "" ? (

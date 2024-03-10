@@ -22,7 +22,6 @@ const UploadFile = ({ ticketNumber, setUploadComplete }) => {
         // Get the download URL for the uploaded file
         const downloadURL = await getDownloadURL(storageRef);
         setUploadComplete(true);
-        console.log("File uploaded successfully. Download URL:", downloadURL);
       } catch (error) {
         console.error("Error uploading file:", error.message);
       }

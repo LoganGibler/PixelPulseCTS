@@ -29,7 +29,7 @@ const ServiceRequestView = ({
   if (ticketValues.status === "Active") {
     var ticketStatusClass =
       "bg-red-300 border-2 text-red-500 border-red-500  rounded-md px-1 text-center py-[1px] font-bold hover:cursor-pointer";
-  } else if (ticketValues.status === "Resolved") {
+  } else if (ticketValues.status === "Completed") {
     var ticketStatusClass =
       "bg-green-100 border-2 text-green-600 border-green-500  rounded-md px-1 text-center py-[1px] font-bold hover:cursor-pointer";
   } else if (ticketValues.status === "Waiting for 3rd Party") {
@@ -95,8 +95,8 @@ const ServiceRequestView = ({
                   <option value="Active" className="bg-slate-100 text-black">
                     Active
                   </option>
-                  <option value="Resolved" className="bg-slate-100 text-black">
-                    Resolved
+                  <option value="Completed" className="bg-slate-100 text-black">
+                    Completed
                   </option>
                   <option value="Closed" className="bg-slate-100 text-black">
                     Closed

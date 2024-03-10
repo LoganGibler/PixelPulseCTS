@@ -189,9 +189,7 @@ const TicketCreation = ({
           <div className="flex grow justify-end">
             <select id="type" defaultValue="" className="hover:cursor-pointer">
               <option className="" value=""></option>
-              <option className="" value="Event">
-                Event
-              </option>
+
               <option className="" value="Service Request">
                 Service Request
               </option>
@@ -200,9 +198,6 @@ const TicketCreation = ({
               </option>
               <option className="" value="Change">
                 Request for Change
-              </option>
-              <option className="" value="Maintenance">
-                Maintenance Notification
               </option>
             </select>
           </div>
