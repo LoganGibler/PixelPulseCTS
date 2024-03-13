@@ -128,6 +128,14 @@ const ChangeDashboard = ({ userData }) => {
                   <p className="text-blue-700 whitespace-nowrap">
                     Start: <span className="text-black">{ticketStartDate}</span>
                   </p>
+                  {ticket.elevatedAccess ? (
+                    <div className="hidden lg:flex mt-[2px] ml-2 text-xs text-red-600">
+                      <TbAlertTriangle className="text-base mt-[1px] mr-1" />
+                      <p className="mt-[1px]">
+                        This change requires elevated access.
+                      </p>
+                    </div>
+                  ) : null}
                   <div className="grow justify-end hidden sm:flex">
                     <p className="text-blue-700">
                       {ticket.involvedTeams.map((team, index) => {
@@ -143,15 +151,6 @@ const ChangeDashboard = ({ userData }) => {
                     </p>
                   </div>
                 </div>
-
-                {ticket.elevatedAccess ? (
-                  <div className="flex mt-2.5 text-xs text-red-600">
-                    <TbAlertTriangle className="text-base mt-[2px] mr-2" />
-                    <p className="mt-[1px]">
-                      This change requires elevated access.
-                    </p>
-                  </div>
-                ) : null}
               </div>
             );
           })
