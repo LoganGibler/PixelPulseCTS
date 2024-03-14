@@ -73,7 +73,7 @@ const AllServiceRequests = ({ userData }) => {
           const formattedTimeStamp = formatTimestamp(ticket.completeBy);
 
           if (index % 2 === 0) {
-            var ticketClassname = "px-3 flex py-3  hover:cursor-pointer";
+            var ticketClassname = "px-3 flex py-2.5  hover:cursor-pointer";
           } else {
             var ticketClassname =
               "px-3 flex py-3 bg-gray-200 hover:cursor-pointer";
@@ -81,22 +81,22 @@ const AllServiceRequests = ({ userData }) => {
 
           if (ticket.status === "Active") {
             var ticketStatusClass =
-              "flex px-4 py-0.5 border-2 rounded-md bg-red-300 text-red-700 border-red-600 whitespace-nowrap";
+              "flex px-4 py-[3px] border-2 rounded-md bg-red-300 text-red-700 border-red-600 whitespace-nowrap";
           } else if (ticket.status === "Completed") {
             var ticketStatusClass =
-              "flex px-4 py-0.5 border-2 rounded-md bg-green-300 text-green-700 border-green-600 whitespace-nowrap";
+              "flex px-4 py-[3px] border-2 rounded-md bg-green-300 text-green-700 border-green-600 whitespace-nowrap";
           } else if (ticket.status === "Submitted") {
             var ticketStatusClass =
-              "flex px-4 py-0.5 border-2 rounded-md bg-purple-300 text-purple-700 border-purple-600 whitespace-nowrap";
+              "flex px-4 py-[3px] border-2 rounded-md bg-purple-300 text-purple-700 border-purple-600 whitespace-nowrap";
           } else if (ticket.status === "Accepted") {
             var ticketStatusClass =
-              "flex px-4 py-0.5 border-2 rounded-md bg-yellow-300 text-yellow-700 border-yellow-600 whitespace-nowrap";
+              "flex px-4 py-[3px] border-2 rounded-md bg-yellow-300 text-yellow-700 border-yellow-600 whitespace-nowrap";
           } else if (ticket.status === "PendingApproval") {
             var ticketStatusClass =
-              "flex px-4 py-0.5 border-2 rounded-md bg-orange-300 text-orange-700 border-orange-600 whitespace-nowrap";
+              "flex px-4 py-[3px] border-2 rounded-md bg-orange-300 text-orange-700 border-orange-600 whitespace-nowrap";
           } else if (ticket.status === "Waiting for 3rd Party") {
             var ticketStatusClass =
-              "flex px-4 py-0.5 border-2 rounded-md bg-orange-300 text-orange-700 border-orange-600 whitespace-nowrap";
+              "flex px-4 py-[3px] border-2 rounded-md bg-orange-300 text-orange-700 border-orange-600 whitespace-nowrap";
           }
 
           return (
@@ -111,7 +111,7 @@ const AllServiceRequests = ({ userData }) => {
               </p>
 
               <div className="flex grow justify-end">
-                <p className="text-blue-700 min-w-[220px] mt-[6px] whitespace-nowrap hidden md:flex">
+                <p className="text-blue-700 min-w-[220px] mt-[6px] whitespace-nowrap hidden lg:flex">
                   Complete By:
                   {ticket.completeBy === "" || !ticket.completeBy ? (
                     <span className="text-black pl-1">EOD</span>
@@ -121,15 +121,18 @@ const AllServiceRequests = ({ userData }) => {
                     </span>
                   )}
                 </p>
-                <p className="flex text-blue-700 min-w-[100px] md:min-w-[160px] whitespace-nowrap overflow-hidden text-ellipsis ml-4">
+                <p className="hidden sm:flex text-blue-700 min-w-[100px] md:min-w-[160px] whitespace-nowrap overflow-hidden text-ellipsis ml-4">
                   <AiOutlineTeam className="mr-1 mt-[6px] text-lg" />
-                  <span className="rounded-full px-2 mt-[5px] py-[1px] mb-[3px] bg-slate-700 text-slate-100">
+                  <span className="rounded-full px-2 mt-[5px] pb-[2px] mb-[3px] bg-slate-700 text-slate-100">
                     {ticket.team}
                   </span>
                 </p>
 
-                <div className="flex justify-start w-[160px] ml-4">
-                  <p className={ticketStatusClass}>{ticket.status}</p>
+                <div className="hidden justify-start w-[160px] ml-4 md:flex">
+                  <div>
+                    {" "}
+                    <p className={ticketStatusClass}>{ticket.status}</p>
+                  </div>
                 </div>
               </div>
             </div>

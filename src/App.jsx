@@ -18,6 +18,7 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { testSession } from "./auth/auth";
 import { getCompanyTeams } from "./api/company";
 import { HomeDashboard, TicketView } from "./containers";
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -28,6 +29,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [moreMenuActive, setMoreMenuActive] = useState(false);
   const [createTicketActive, setCreateTicketActive] = useState(false);
+  const [createUserActive, setCreateUserActive] = useState(false);
 
   async function fetchCompanyTeams() {
     const fetchedTeams = await getCompanyTeams();
@@ -82,7 +84,11 @@ function App() {
                   createTicketActive={createTicketActive}
                   setCreateTicketActive={setCreateTicketActive}
                 />
-                <AllIncidents userData={userData} />
+                <ProtectedRoute
+                  element={AllIncidents}
+                  userData={userData}
+                  key="AllIncidentsKey"
+                />
               </div>,
             ]}
           />
@@ -103,7 +109,11 @@ function App() {
                   createTicketActive={createTicketActive}
                   setCreateTicketActive={setCreateTicketActive}
                 />
-                <AllChanges userData={userData} />
+                <ProtectedRoute
+                  element={AllChanges}
+                  userData={userData}
+                  key="allchangeskey"
+                />
               </div>,
             ]}
           />
@@ -124,7 +134,11 @@ function App() {
                   createTicketActive={createTicketActive}
                   setCreateTicketActive={setCreateTicketActive}
                 />
-                <AllServiceRequests userData={userData} />
+                <ProtectedRoute
+                  element={AllServiceRequests}
+                  userData={userData}
+                  key="allservkey"
+                />
               </div>,
             ]}
           />
@@ -145,7 +159,7 @@ function App() {
                   setCreateTicketActive={setCreateTicketActive}
                 />
                 <div className="flex">
-                  <HomeDashboard userData={userData} />
+                  <ProtectedRoute element={HomeDashboard} userData={userData} />
                 </div>
               </div>,
             ]}
@@ -165,7 +179,13 @@ function App() {
                   createTicketActive={createTicketActive}
                   setCreateTicketActive={setCreateTicketActive}
                 />
-                <UserList />
+                <ProtectedRoute
+                  element={UserList}
+                  userData={userData}
+                  setCreateUserActive={setCreateUserActive}
+                  createUserActive={createUserActive}
+                  companyTeams={companyTeams}
+                />
               </div>,
             ]}
           />
@@ -185,14 +205,19 @@ function App() {
                   createTicketActive={createTicketActive}
                   setCreateTicketActive={setCreateTicketActive}
                 />
-                <TicketView userData={userData} companyTeams={companyTeams} />
+                <ProtectedRoute
+                  element={TicketView}
+                  userData={userData}
+                  companyTeams={companyTeams}
+                />
               </div>,
             ]}
           />
         </Routes>
         {createTicketActive ? (
           <div className="flex justify-center">
-            <TicketCreation
+            <ProtectedRoute
+              element={TicketCreation}
               userData={userData}
               companyTeams={companyTeams}
               createTicketActive={createTicketActive}
@@ -201,7 +226,8 @@ function App() {
           </div>
         ) : null}
         {mobileMenuActive ? (
-          <MobileMenu
+          <ProtectedRoute
+            element={MobileMenu}
             mobileMenuActive={mobileMenuActive}
             setMobileMenuActive={setMobileMenuActive}
           />
@@ -209,7 +235,8 @@ function App() {
         {mobileMenuActive ||
         showUserMenu ||
         moreMenuActive ||
-        createTicketActive ? (
+        createTicketActive ||
+        createUserActive ? (
           <div
             className="overlay1"
             onClick={() => {
@@ -217,6 +244,7 @@ function App() {
               setShowUserMenu(false);
               setMoreMenuActive(false);
               setCreateTicketActive(false);
+              setCreateUserActive(false);
             }}
           ></div>
         ) : null}

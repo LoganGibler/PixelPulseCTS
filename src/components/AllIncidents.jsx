@@ -149,7 +149,7 @@ const AllIncidents = ({ userData }) => {
                 <div className="flex justify-end grow text-sm">
                   <div className="text-blue-700 whitespace-nowrap pr-0 hidden sm:flex min-w-[145px] overflow-hidden text-ellipsis ml-3">
                     <AiOutlineTeam className="text-lg mt-[5px] mr-1" />
-                    <p className="text-slate-100 bg-slate-700 rounded-full px-3 py-[2p1] mt-[5px] mb-[2px]">
+                    <p className="text-slate-100 bg-slate-700 rounded-full px-3 pb-[2px] mt-[5px] mb-[2px]">
                       {" "}
                       {ticket.team}
                     </p>

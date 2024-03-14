@@ -2,7 +2,6 @@ import axios from "axios";
 // const url = "https://pixelpulseapi-0sgu.onrender.com";
 const url = "http://localhost:8000";
 
-
 const headersTemp = document.cookie.split(";"); // <-- this get all cookies saves and splits them in the array.
 const finalHeaders = {};
 if (headersTemp[0] !== "") {
@@ -16,10 +15,19 @@ if (headersTemp[0] !== "") {
 export async function getTeamsTickets(type, userData) {
   let team = userData.team;
   try {
-    const tickets = await axios.post(`${url}/ticket/getTicketsByTeamsAndDate`, {
-      team: team,
-      type: type,
-    });
+    const tickets = await axios.post(
+      `${url}/ticket/getTicketsByTeamsAndDate`,
+      {
+        team: team,
+        type: type,
+      },
+      {
+        headers: {
+          authorization: finalHeaders.session_token,
+          user_id: finalHeaders.user_id,
+        },
+      }
+    );
 
     let elements = tickets.data.ticketArray;
 
@@ -50,10 +58,19 @@ export async function getTeamsTickets(type, userData) {
 export async function claimTicket(guideID, userData) {
   try {
     console.log(userData.name);
-    const response = await axios.post(`${url}/ticket/assignTicket`, {
-      _id: guideID,
-      name: userData.name,
-    });
+    const response = await axios.post(
+      `${url}/ticket/assignTicket`,
+      {
+        _id: guideID,
+        name: userData.name,
+      },
+      {
+        headers: {
+          authorization: finalHeaders.session_token,
+          user_id: finalHeaders.user_id,
+        },
+      }
+    );
     console.log(response);
   } catch (error) {
     console.log(error);
@@ -79,23 +96,32 @@ export async function createTicket(
 ) {
   try {
     console.log("trying to create ticket");
-    const response = await axios.post(`${url}/ticket/createTicket`, {
-      title: title,
-      type: type,
-      description: description,
-      involvedTeams: involvedTeams,
-      team: assignedTeam,
-      priority: priority,
-      master: isMaster,
-      paging: isPaging,
-      submitter: userData.name,
-      completeBy: completeBy,
-      implementationStart: implementationStart,
-      implementationEnd: implementationEnd,
-      elevatedAccess: permissions,
-      relatedTicket: relatedTicket,
-      emergency: emergency,
-    });
+    const response = await axios.post(
+      `${url}/ticket/createTicket`,
+      {
+        title: title,
+        type: type,
+        description: description,
+        involvedTeams: involvedTeams,
+        team: assignedTeam,
+        priority: priority,
+        master: isMaster,
+        paging: isPaging,
+        submitter: userData.name,
+        completeBy: completeBy,
+        implementationStart: implementationStart,
+        implementationEnd: implementationEnd,
+        elevatedAccess: permissions,
+        relatedTicket: relatedTicket,
+        emergency: emergency,
+      },
+      {
+        headers: {
+          authorization: finalHeaders.session_token,
+          user_id: finalHeaders.user_id,
+        },
+      }
+    );
     console.log(response);
     return response;
   } catch (error) {
@@ -105,9 +131,18 @@ export async function createTicket(
 
 export async function getAllUnresolvedTickets(type) {
   try {
-    const response = await axios.post(`${url}/ticket/getAllUnresolvedTickets`, {
-      type: type,
-    });
+    const response = await axios.post(
+      `${url}/ticket/getAllUnresolvedTickets`,
+      {
+        type: type,
+      },
+      {
+        headers: {
+          authorization: finalHeaders.session_token,
+          user_id: finalHeaders.user_id,
+        },
+      }
+    );
     const sortedTickets = response.data.tickets.sort(
       (a, b) => parseInt(b.ticketNumber) - parseInt(a.ticketNumber)
     );
@@ -119,9 +154,18 @@ export async function getAllUnresolvedTickets(type) {
 
 export async function searchTickets(search) {
   try {
-    const response = await axios.post(`${url}/ticket/searchTickets`, {
-      search: search,
-    });
+    const response = await axios.post(
+      `${url}/ticket/searchTickets`,
+      {
+        search: search,
+      },
+      {
+        headers: {
+          authorization: finalHeaders.session_token,
+          user_id: finalHeaders.user_id,
+        },
+      }
+    );
 
     // console.log(response.data.tickets);
     return response.data.tickets;
@@ -132,9 +176,18 @@ export async function searchTickets(search) {
 
 export async function findTicketByTicketNumber(ticketNumber) {
   try {
-    const response = await axios.post(`${url}/ticket/getTicketByTicketNumber`, {
-      ticketNumber: ticketNumber,
-    });
+    const response = await axios.post(
+      `${url}/ticket/getTicketByTicketNumber`,
+      {
+        ticketNumber: ticketNumber,
+      },
+      {
+        headers: {
+          authorization: finalHeaders.session_token,
+          user_id: finalHeaders.user_id,
+        },
+      }
+    );
 
     // console.log(response.data.ticket);
     return response.data.ticket;
@@ -146,10 +199,19 @@ export async function findTicketByTicketNumber(ticketNumber) {
 export async function updateTicket(ticketValues, user) {
   console.log(ticketValues);
   try {
-    const response = await axios.post(`${url}/ticket/updateTicket`, {
-      ticketValues: ticketValues,
-      user: user,
-    });
+    const response = await axios.post(
+      `${url}/ticket/updateTicket`,
+      {
+        ticketValues: ticketValues,
+        user: user,
+      },
+      {
+        headers: {
+          authorization: finalHeaders.session_token,
+          user_id: finalHeaders.user_id,
+        },
+      }
+    );
 
     console.log(response);
     return response;

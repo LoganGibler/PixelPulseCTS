@@ -6,7 +6,7 @@ const MoreMenu = ({ moreMenuActive, setMoreMenuActive }) => {
   return (
     <div className="flex flex-col absolute mt-8 lg:mt-2 rounded-br-lg rounded-bl-lg rounded-tr-lg bg-slate-100 text-black z-20">
       <p
-        className="py-2 px-3 text-black hover:cursor-pointer hover:bg-slate-200"
+        className="py-2 px-3 text-black hover:cursor-pointer hover:bg-slate-200 flex lg:hidden"
         onClick={(e) => {
           setMoreMenuActive(false);
           navigate("/AllIncidents");
@@ -15,7 +15,7 @@ const MoreMenu = ({ moreMenuActive, setMoreMenuActive }) => {
         Incidents
       </p>
       <p
-        className="py-2 px-3 text-black hover:cursor-pointer hover:bg-slate-200"
+        className="py-2 px-3 text-black hover:cursor-pointer hover:bg-slate-200 lg:hidden flex"
         onClick={(e) => {
           setMoreMenuActive(false);
           navigate("/AllServiceRequests");
@@ -27,7 +27,7 @@ const MoreMenu = ({ moreMenuActive, setMoreMenuActive }) => {
         className="py-2 px-3 text-black hover:cursor-pointer hover:bg-slate-200"
         onClick={(e) => {
           setMoreMenuActive(false);
-          useNavigate("/AllUsers");
+          navigate("/UserList");
         }}
       >
         All Users
