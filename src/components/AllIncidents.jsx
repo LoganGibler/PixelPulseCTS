@@ -100,9 +100,6 @@ const AllIncidents = ({ userData }) => {
         {tickets.length ? (
           tickets.map((ticket, index) => {
             const ticketCreationDate = formatTimestamp(ticket.dateCreated);
-            {
-              /* console.log(ticket); */
-            }
 
             if (index % 2 === 0) {
               var ticketClassname =
@@ -112,42 +109,61 @@ const AllIncidents = ({ userData }) => {
                 "flex grow border-b-[1px] py-3.5 px-3 hover:cursor-pointer bg-gray-200 text-sm";
             }
 
+            if (ticket.status === "Active") {
+              var ticketStatusClass =
+                " px-4 py-0.5 border-2 rounded-md bg-red-300 text-red-700 border-red-600";
+            } else if (ticket.status === "Resolved") {
+              var ticketStatusClass =
+                " px-4 py-0.5 border-2 rounded-md bg-green-300 text-green-700 border-green-600";
+            } else if (ticket.status === "Submitted") {
+              var ticketStatusClass =
+                "h px-4 py-0.5 border-2 rounded-md bg-purple-300 text-purple-700 border-purple-600";
+            } else if (ticket.status === "Waiting for 3rd Party") {
+              var ticketStatusClass =
+                " px-4 py-0.5 border-2 rounded-md bg-yellow-300 text-yellow-700 border-yellow-600";
+            }
+
             return (
               <div
                 key={index}
                 className={ticketClassname}
                 onClick={() => navigate("/ticket/" + ticket.ticketNumber)}
               >
-                <p className="mr-2">#{ticket.ticketNumber}</p>
+                <p className="mr-2 mt-[4px]">#{ticket.ticketNumber}</p>
                 {ticket.priority === "1" ? (
-                  <Bs1SquareFill className=" min-w-[20px] min-h-[18px] mt-[1px]  mr-2 text-lg text-red-700" />
+                  <Bs1SquareFill className=" min-w-[20px] min-h-[18px] mt-[4px]  mr-2 text-lg text-red-700" />
                 ) : null}
                 {ticket.priority === "2" ? (
-                  <Bs2SquareFill className=" min-w-[20px] min-h-[18px] mt-[1px]  mr-2 text-lg text-blue-800" />
+                  <Bs2SquareFill className=" min-w-[20px] min-h-[18px] mt-[4px]  mr-2 text-lg text-blue-800" />
                 ) : null}
                 {ticket.priority === "3" ? (
-                  <Bs3SquareFill className=" min-w-[20px] min-h-[18px] mt-[1px]  mr-2 text-lg text-yellow-500" />
+                  <Bs3SquareFill className=" min-w-[20px] min-h-[18px] mt-[4px]  mr-2 text-lg text-yellow-500" />
                 ) : null}
                 {ticket.priority === "4" ? (
-                  <Bs4SquareFill className=" min-w-[20px] min-h-[18px] mt-[1px]  mr-2 text-lg text-green-600" />
+                  <Bs4SquareFill className=" min-w-[20px] min-h-[18px] mt-[4px]  mr-2 text-lg text-green-600" />
                 ) : null}
-                <p className="overflow-hidden text-ellipsis whitespace-nowrap md:pr-6 font-semibold">
+                <p className="overflow-hidden mt-[4px] text-ellipsis whitespace-nowrap md:pr-6 font-semibold">
                   {ticket.title}
                 </p>
 
                 <div className="flex justify-end grow text-sm">
-                  <p className="hidden md:flex text-blue-700 pl-8 whitespace-nowrap pr-4 min-w-[160px] overflow-hidden text-ellipsis">
-                    <FaRegClock className="mt-[3px] mr-1" />
-                    <span className="text-black">{ticketCreationDate}</span>
+                  <div className="text-blue-700 whitespace-nowrap pr-0 hidden sm:flex min-w-[145px] overflow-hidden text-ellipsis ml-3">
+                    <AiOutlineTeam className="text-lg mt-[5px] mr-1" />
+                    <p className="text-slate-100 bg-slate-700 rounded-full px-3 py-[2p1] mt-[5px] mb-[2px]">
+                      {" "}
+                      {ticket.team}
+                    </p>
+                  </div>
+                  <p className="hidden md:flex text-blue-700 pl-8 whitespace-nowrap pr-4 min-w-[140px] overflow-hidden text-ellipsis">
+                    <FaRegClock className="mr-1 mt-[7px]" />
+                    <span className="text-black mt-[4px]">
+                      {ticketCreationDate}
+                    </span>
                   </p>
-                  <p className="text-blue-700 whitespace-nowrap pr-0 hidden sm:flex min-w-[160px] overflow-hidden text-ellipsis ml-3">
-                    <AiOutlineTeam className="text-lg mt-[1px] mr-1" />
-                    <span className="text-black">{ticket.team}</span>
-                  </p>
-                  <p className="hidden lg:flex text-blue-700 min-w-[180px] overflow-hidden text-ellipsis">
-                    Status:
-                    <span className="text-black pl-1">{ticket.status}</span>
-                  </p>
+
+                  <div className="w-[168px] justify-start hidden lg:flex ml-6">
+                    <p className={ticketStatusClass}>{ticket.status}</p>
+                  </div>
                 </div>
               </div>
             );
