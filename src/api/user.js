@@ -15,15 +15,38 @@ if (headersTemp[0] !== "") {
   });
 }
 
-// export async function createUser(){
-//     try {
-//         const createdUser = await axios.post(`${url}/user/createUser`, {
-
-//         })
-//     } catch (error) {
-
-//     }
-// }
+export async function createUser(
+  username,
+  email,
+  team,
+  officePhone,
+  pagerPhone,
+  role
+) {
+  try {
+    const createdUser = await axios.post(
+      `${url}/user/createUser`,
+      {
+        name: username,
+        email: email,
+        role: role,
+        team: team,
+        officePhone: officePhone,
+        pagerPhone: pagerPhone,
+      },
+      {
+        headers: {
+          authorization: finalHeaders.session_token,
+          user_id: finalHeaders.user_id,
+        },
+      }
+    );
+    console.log("HERE is created user: ", createUser);
+    return createdUser.data;
+  } catch (error) {
+    throw error;
+  }
+}
 
 export async function loginUser(email, password) {
   try {

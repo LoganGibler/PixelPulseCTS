@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { userList, searchUser } from "../api/user";
+import { userList, searchUser, createUser } from "../api/user";
 import { CgProfile } from "react-icons/cg";
 import { IoSearchSharp } from "react-icons/io5";
 import { FaPager } from "react-icons/fa6";
@@ -18,7 +18,7 @@ const UserList = ({
   const [team, setTeam] = useState([]);
   const [officePhone, setOfficePhone] = useState("");
   const [pagerPhone, setPagerPhone] = useState("");
-  const [role, setRole] = useState([]);
+  const [role, setRole] = useState("user");
 
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
@@ -64,7 +64,7 @@ const UserList = ({
                   handleUserSearch(e.target.value);
                 }}
               ></input>
-              {userData.role.includes("admin") ? (
+              {userData && userData.role && userData.role.includes("admin") ? (
                 <button
                   className="hidden sm:flex bg-white py-[1px] text-blue-700 border-2 border-blue-700 rounded-md px-2"
                   onClick={() => setCreateUserActive(true)}
@@ -87,11 +87,11 @@ const UserList = ({
                 className="flex-col flex py-2 px-5 border-b-[1px] border-[rgba(65,96,199,1)] hover:cursor-pointer hover:bg-slate-200"
               >
                 <div className="flex justify-between">
-                  <p className="w-[160px] flex text-ellipsis overflow-hidden whitespace-nowrap">
-                    <CgProfile className="mt-[4px] mr-2 text-blue-700" />
+                  <p className="w-[160px] mt-[2px] flex text-ellipsis overflow-hidden whitespace-nowrap">
+                    <CgProfile className="mt-[3px] mr-2 text-blue-700" />
                     {user.name}
                   </p>
-                  <p className="w-[220px] text-ellipsis overflow-hidden whitespace-nowrap">
+                  <p className="w-[220px] mt-[2px] text-ellipsis overflow-hidden whitespace-nowrap">
                     {user.email}
                   </p>
                   <div className=" hidden lg:flex whitespace-nowrap w-[400px] overflow-hidden text-ellipsis">
@@ -107,11 +107,11 @@ const UserList = ({
                     })}
                   </div>
                   <p className="hidden md:flex w-[220px] text-ellipsis mt-[2px]  overflow-hidden whitespace-nowrap">
-                    <HiOutlineBuildingOffice2 className="mr-1.5 mt-[2px] text-xl text-blue-700" />
+                    <HiOutlineBuildingOffice2 className="mr-1.5 mt-[1px] text-xl text-blue-700" />
                     {user.officePhone}
                   </p>
                   <p className="hidden lg:flex w-[220px] text-ellipsis mt-[2px] overflow-hidden whitespace-nowrap">
-                    <FaPager className="text-xl mt-[3px] mr-1.5 text-blue-700" />
+                    <FaPager className="text-xl mt-[1px] mr-1.5 text-blue-700" />
                     {user.pagerPhone}
                   </p>
                 </div>
@@ -126,7 +126,32 @@ const UserList = ({
       </div>
       {createUserActive ? (
         <div className="flex justify-center">
-          <form className="absolute min-w-[350px] top-[2rem] sm:top-[8rem] flex flex-col bg-white z-10 px-4 py-7 rounded-md">
+          <form
+            className="absolute min-w-[350px] top-[2rem] sm:top-[8rem] flex flex-col bg-white z-10 px-4 py-7 rounded-md"
+            onSubmit={async (e) => {
+              e.preventDefault();
+              try {
+                const username = firstname + " " + lastname;
+                const createdUser = await createUser(
+                  username,
+                  email,
+                  team,
+                  officePhone,
+                  pagerPhone,
+                  role
+                );
+                if (createdUser) {
+                  setCreateUserActive(false);
+                  await fetchUserList();
+                  alert(
+                    "User created successfully. They have been emailed their temporary password."
+                  );
+                }
+              } catch (error) {
+                throw error;
+              }
+            }}
+          >
             <div className="flex flex-col sm:flex-row">
               <p className="pb-1 px-1 mr-2 border-b-2 border-blue-700">
                 Firstname:{" "}
