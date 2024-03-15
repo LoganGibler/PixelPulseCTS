@@ -24,4 +24,4 @@ export { default as ChangeTasks } from "./ChangeTasks";
 export { default as UploadFile } from "./UploadFile";
 export { default as IncidentView } from "./IncidentView";
 export { default as ServiceRequestView } from "./ServiceRequestView";
-
+export { default as UserView } from "./UserView";

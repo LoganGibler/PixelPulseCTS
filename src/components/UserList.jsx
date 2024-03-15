@@ -5,6 +5,7 @@ import { IoSearchSharp } from "react-icons/io5";
 import { FaPager } from "react-icons/fa6";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { MdRemoveCircle } from "react-icons/md";
+import { useNavigate } from "react-router";
 
 const UserList = ({
   userData,
@@ -22,7 +23,7 @@ const UserList = ({
 
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
-  console.log(userData);
+  const navigate = useNavigate();
   // const [searchResult, setSearchResult] = useState([]);
 
   const fetchUserList = async () => {
@@ -66,7 +67,7 @@ const UserList = ({
               ></input>
               {userData && userData.role && userData.role.includes("admin") ? (
                 <button
-                  className="hidden sm:flex bg-white py-[1px] text-blue-700 border-2 border-blue-700 rounded-md px-2"
+                  className="hidden sm:flex bg-white py-[2px] ml-1 h-[28px] text-blue-700 border-2 border-blue-700 rounded-md px-2"
                   onClick={() => setCreateUserActive(true)}
                 >
                   Create User
@@ -79,12 +80,11 @@ const UserList = ({
       <div className="grow">
         {users.length ? (
           users.map((user, index) => {
-            console.log(user);
-
             return (
               <div
                 key={index}
                 className="flex-col flex py-2 px-5 border-b-[1px] border-[rgba(65,96,199,1)] hover:cursor-pointer hover:bg-slate-200"
+                onClick={() => navigate(`/user/${user._id}`)}
               >
                 <div className="flex justify-between">
                   <p className="w-[160px] mt-[2px] flex text-ellipsis overflow-hidden whitespace-nowrap">

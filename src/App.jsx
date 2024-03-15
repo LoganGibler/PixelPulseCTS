@@ -12,6 +12,7 @@ import {
   AllIncidents,
   AllServiceRequests,
   AllChanges,
+  UserView,
 } from "./components";
 
 import { Routes, Route, BrowserRouter } from "react-router-dom";
@@ -207,6 +208,29 @@ function App() {
                 />
                 <ProtectedRoute
                   element={TicketView}
+                  userData={userData}
+                  companyTeams={companyTeams}
+                />
+              </div>,
+            ]}
+          />
+          <Route
+            path="/user/:id"
+            element={[
+              <div key="UserView" className="">
+                <Navbar
+                  mobileMenuActive={mobileMenuActive}
+                  setMobileMenuActive={setMobileMenuActive}
+                  userData={userData}
+                  setShowUserMenu={setShowUserMenu}
+                  showUserMenu={showUserMenu}
+                  moreMenuActive={moreMenuActive}
+                  setMoreMenuActive={setMoreMenuActive}
+                  createTicketActive={createTicketActive}
+                  setCreateTicketActive={setCreateTicketActive}
+                />
+                <ProtectedRoute
+                  element={UserView}
                   userData={userData}
                   companyTeams={companyTeams}
                 />

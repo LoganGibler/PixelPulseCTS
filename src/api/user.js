@@ -97,3 +97,65 @@ export async function searchUser(search) {
     console.error(error);
   }
 }
+
+export async function getUserDetails(id) {
+  try {
+    const response = await axios.post(
+      `${url}/user/getUsersById`,
+      {
+        id: id,
+      },
+      {
+        headers: {
+          authorization: finalHeaders.session_token,
+          user_id: finalHeaders.user_id,
+        },
+      }
+    );
+
+    return response.data.users;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getTeamData(teams) {
+  try {
+    // console.log("TEAMS: ", teams);
+    const response = await axios.post(
+      `${url}/user/getUsersTeams`,
+      {
+        teams: teams,
+      },
+      {
+        headers: {
+          authorization: finalHeaders.session_token,
+          user_id: finalHeaders.user_id,
+        },
+      }
+    );
+    return response.data.teamData;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getTeamMembers(team) {
+  try {
+    const response = await axios.post(
+      `${url}/user/getTeamMembers`,
+      {
+        team: team,
+      },
+      {
+        headers: {
+          authorization: finalHeaders.session_token,
+          user_id: finalHeaders.user_id,
+        },
+      }
+    );
+    return response.data.teamMembers;
+  } catch (error) {
+    console.error(error);
+  }
+}

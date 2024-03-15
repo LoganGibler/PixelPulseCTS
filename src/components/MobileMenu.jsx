@@ -119,7 +119,13 @@ const MobileMenu = ({ mobileMenuActive, setMobileMenuActive }) => {
             </div>
           </div>
 
-          <div className="flex px-3 py-2 my-3">
+          <div
+            className="flex px-3 py-2 my-3"
+            onClick={() => {
+              navigate("/UserList");
+              setMobileMenuActive(false);
+            }}
+          >
             <RiTeamLine className="text-2xl text-blue-600 mr-0.5" />
             <div className="flex grow justify-end">
               <p>All Users</p>
