@@ -13,6 +13,8 @@ import {
   AllServiceRequests,
   AllChanges,
   UserView,
+  TeamsList,
+  TeamView,
 } from "./components";
 
 import { Routes, Route, BrowserRouter } from "react-router-dom";
@@ -231,6 +233,52 @@ function App() {
                 />
                 <ProtectedRoute
                   element={UserView}
+                  userData={userData}
+                  companyTeams={companyTeams}
+                />
+              </div>,
+            ]}
+          />
+          <Route
+            path="/AllTeams"
+            element={[
+              <div className="" key="teamsList">
+                <Navbar
+                  mobileMenuActive={mobileMenuActive}
+                  setMobileMenuActive={setMobileMenuActive}
+                  userData={userData}
+                  setShowUserMenu={setShowUserMenu}
+                  showUserMenu={showUserMenu}
+                  moreMenuActive={moreMenuActive}
+                  setMoreMenuActive={setMoreMenuActive}
+                  createTicketActive={createTicketActive}
+                  setCreateTicketActive={setCreateTicketActive}
+                />
+                <ProtectedRoute
+                  element={TeamsList}
+                  userData={userData}
+                  companyTeams={companyTeams}
+                />
+              </div>,
+            ]}
+          />
+          <Route
+            path="/team/:id"
+            element={[
+              <div key="teamView">
+                <Navbar
+                  mobileMenuActive={mobileMenuActive}
+                  setMobileMenuActive={setMobileMenuActive}
+                  userData={userData}
+                  setShowUserMenu={setShowUserMenu}
+                  showUserMenu={showUserMenu}
+                  moreMenuActive={moreMenuActive}
+                  setMoreMenuActive={setMoreMenuActive}
+                  createTicketActive={createTicketActive}
+                  setCreateTicketActive={setCreateTicketActive}
+                />
+                <ProtectedRoute
+                  element={TeamView}
                   userData={userData}
                   companyTeams={companyTeams}
                 />

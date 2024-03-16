@@ -26,3 +26,35 @@ export async function getCompanyTeams() {
     throw error;
   }
 }
+
+export async function getTeams() {
+  try {
+    const response = await axios.get(`${url}/teamInfo/getTeams`, {
+      headers: {
+        authorization: finalHeaders.session_token,
+        user_id: finalHeaders.user_id,
+      },
+    });
+    return response.data.teams;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getTeamById(id) {
+  try {
+    const response = await axios.post(
+      `${url}/teamInfo/getTeamById`,
+      { id: id },
+      {
+        headers: {
+          authorization: finalHeaders.session_token,
+          user_id: finalHeaders.user_id,
+        },
+      }
+    );
+    return response.data.team;
+  } catch (error) {
+    console.error(error);
+  }
+}

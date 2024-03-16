@@ -20,6 +20,7 @@ const UserView = () => {
     team: [],
     _id: "",
   });
+
   const [userTeamsInfo, setUserTeamsInfo] = useState([]);
   const [associatedUsers, setAssociatedUsers] = useState([]);
 
@@ -116,6 +117,12 @@ const UserView = () => {
                       ? associatedUsers[0].map((user, index) => {
                           if (!user.team.includes(team.teamName)) {
                             return;
+                          }
+
+                          {
+                            if (userValues.name === user.name) {
+                              return;
+                            }
                           }
                           return (
                             <div

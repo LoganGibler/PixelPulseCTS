@@ -138,7 +138,15 @@ const Navbar = ({
           <div className="absolute w-[150px] z-10 bg-slate-100 mt-10 right-1 px-2 rounded-sm pb-2">
             <div className="flex flex-col justify-center">
               {" "}
-              <p className="py-1 hover:cursor-pointer">Profile</p>
+              <p
+                className="py-1 hover:cursor-pointer"
+                onClick={() => {
+                  navigate("/user/" + userData._id);
+                  setShowUserMenu(false);
+                }}
+              >
+                Profile
+              </p>
               <p className="py-1 hover:cursor-pointer">Manage Team</p>
               <button
                 className="bg-gradient py-1 mt-2 rounded-md text-white"
