@@ -85,114 +85,118 @@ const ServiceReqDash = ({ userData }) => {
       </div>
 
       <div className="text-sm overflow-y-scroll max-h-[650px]">
-        {serviceRequests
-          ? serviceRequests.map((ticket, index) => {
-              if (index % 2 === 0) {
-                var elementClassname =
-                  "flex flex-col px-2 py-3 border-b-[1px] hover:cursor-pointer";
-              } else {
-                var elementClassname =
-                  "flex flex-col px-2 py-3 border-b-[1px] hover:cursor-pointer  bg-gray-200";
-              }
-              const ticketCompleteByDate = formatTimestamp(ticket.completeBy);
-              const ticketCreationDate = formatTimestamp(ticket.dateCreated);
+        {serviceRequests ? (
+          serviceRequests.map((ticket, index) => {
+            if (index % 2 === 0) {
+              var elementClassname =
+                "flex flex-col px-2 py-3 border-b-[1px] hover:cursor-pointer";
+            } else {
+              var elementClassname =
+                "flex flex-col px-2 py-3 border-b-[1px] hover:cursor-pointer  bg-gray-200";
+            }
+            const ticketCompleteByDate = formatTimestamp(ticket.completeBy);
+            const ticketCreationDate = formatTimestamp(ticket.dateCreated);
 
-              if (ticket.status === "Active") {
-                var ticketStatusClass =
-                  "flex px-4 py-0.5 border-2 rounded-md bg-red-300 text-red-700 border-red-600";
-              } else if (ticket.status === "Completed") {
-                var ticketStatusClass =
-                  "flex px-4 py-0.5 border-2 rounded-md bg-green-300 text-green-700 border-green-600";
-              } else if (ticket.status === "Submitted") {
-                var ticketStatusClass =
-                  "flex px-4 py-0.5 border-2 rounded-md bg-purple-300 text-purple-700 border-purple-600";
-              } else if (ticket.status === "Accepted") {
-                var ticketStatusClass =
-                  "flex px-4 py-0.5 border-2 rounded-md bg-yellow-300 text-yellow-700 border-yellow-600";
-              } else if (ticket.status === "PendingApproval") {
-                var ticketStatusClass =
-                  "flex px-4 py-0.5 border-2 rounded-md bg-orange-300 text-orange-700 border-orange-600";
-              }
+            if (ticket.status === "Active") {
+              var ticketStatusClass =
+                "flex px-4 py-0.5 border-2 rounded-md bg-red-300 text-red-700 border-red-600 whitespace-nowrap";
+            } else if (ticket.status === "Completed") {
+              var ticketStatusClass =
+                "flex px-4 py-0.5 border-2 rounded-md bg-green-300 text-green-700 border-green-600 whitespace-nowrap";
+            } else if (ticket.status === "Submitted") {
+              var ticketStatusClass =
+                "flex px-4 py-0.5 border-2 rounded-md bg-purple-300 text-purple-700 border-purple-600 whitespace-nowrap";
+            } else if (ticket.status === "Accepted") {
+              var ticketStatusClass =
+                "flex px-4 py-0.5 border-2 rounded-md bg-yellow-300 text-yellow-700 border-yellow-600 whitespace-nowrap";
+            } else if (ticket.status === "Waiting for 3rd Party") {
+              var ticketStatusClass =
+                "flex px-4 py-0.5 border-2 rounded-md bg-orange-300 text-orange-700 border-orange-600 whitespace-nowrap";
+            }
 
-              return (
-                <div
-                  className={elementClassname}
-                  key={index}
-                  onClick={() => navigate("/ticket/" + ticket.ticketNumber)}
-                >
-                  <div className="flex">
-                    <p className="pr-2">#{ticket.ticketNumber}</p>
-                    <p className="truncated-text-sm font-semibold">
-                      {ticket.title}
-                    </p>
-                    <div className="flex justify-end grow">
-                      <div>
-                        <p className={ticketStatusClass}>{ticket.status}</p>
-                      </div>
+            return (
+              <div
+                className={elementClassname}
+                key={index}
+                onClick={() => navigate("/ticket/" + ticket.ticketNumber)}
+              >
+                <div className="flex">
+                  <p className="pr-2">#{ticket.ticketNumber}</p>
+                  <p className="truncated-text-sm font-semibold pr-2">
+                    {ticket.title}
+                  </p>
+                  <div className="flex justify-end grow">
+                    <div>
+                      <p className={ticketStatusClass}>{ticket.status}</p>
                     </div>
                   </div>
-                  <div className="text-xs mt-[8px] px-2 flex py-1">
-                    {ticket.userAssigned === "" ? (
-                      <p className="text-blue-700 pr-5">
-                        Submitter:{" "}
-                        <span className="text-black font-semibold">
-                          {ticket.submitter}
-                        </span>
-                      </p>
-                    ) : (
-                      <p className="text-blue-700 pr-5 overflow-hidden max-w-[155px] md:max-w-[300px] whitespace-nowrap text-ellipsis">
-                        Assigned to:
-                        <span className="text-black font-semibold ml-1">
-                          {ticket.userAssigned}
-                        </span>
-                      </p>
-                    )}
+                </div>
+                <div className="text-xs mt-[8px] px-2 flex py-1">
+                  {ticket.userAssigned === "" ? (
+                    <p className="text-blue-700 pr-5">
+                      Submitter:{" "}
+                      <span className="text-black font-semibold">
+                        {ticket.submitter}
+                      </span>
+                    </p>
+                  ) : (
+                    <p className="text-blue-700 pr-5 overflow-hidden max-w-[155px] md:max-w-[300px] whitespace-nowrap text-ellipsis">
+                      Assigned to:
+                      <span className="text-black font-semibold ml-1">
+                        {ticket.userAssigned}
+                      </span>
+                    </p>
+                  )}
 
-                    {ticket.userAssigned === "" ? (
+                  {ticket.userAssigned === "" ? (
+                    <div className="flex grow justify-end">
+                      <button
+                        className="text-sm px-4 border-[1px] font-semibold rounded-lg bg-gradient text-white hover:cursor-pointer"
+                        onClick={async (e) => {
+                          e.stopPropagation();
+                          await claimTicket(ticket._id, userData);
+                          await fetchServiceRequests(userData);
+                        }}
+                      >
+                        Claim
+                      </button>
+                    </div>
+                  ) : null}
+
+                  {ticket.userAssigned ? (
+                    !ticket.completeBy ? (
                       <div className="flex grow justify-end">
-                        <button
-                          className="text-sm px-4 border-[1px] font-semibold rounded-lg bg-gradient text-white hover:cursor-pointer"
-                          onClick={async (e) => {
-                            e.stopPropagation();
-                            await claimTicket(ticket._id, userData);
-                            await fetchServiceRequests(userData);
-                          }}
-                        >
-                          Claim
-                        </button>
+                        <p className="text-blue-700 whitespace-nowrap">
+                          Created:{" "}
+                          <span className="text-black font-semibold">
+                            {ticketCreationDate}
+                          </span>
+                        </p>
                       </div>
-                    ) : null}
+                    ) : (
+                      <div className="flex grow justify-end">
+                        {" "}
+                        <div className="text-blue-700 whitespace-nowrap flex">
+                          <p className="hidden md:flex whitespace-nowrap">
+                            Complete By:
+                          </p>
 
-                    {ticket.userAssigned ? (
-                      !ticket.completeBy ? (
-                        <div className="flex grow justify-end">
-                          <p className="text-blue-700 whitespace-nowrap">
-                            Created:{" "}
-                            <span className="text-black font-semibold">
-                              {ticketCreationDate}
-                            </span>
+                          <p className="text-black font-semibold whitespace-nowrap">
+                            {ticketCompleteByDate}
                           </p>
                         </div>
-                      ) : (
-                        <div className="flex grow justify-end">
-                          {" "}
-                          <div className="text-blue-700 whitespace-nowrap flex">
-                            <p className="hidden md:flex whitespace-nowrap">
-                              Complete By:
-                            </p>
-
-                            <p className="text-black font-semibold whitespace-nowrap">
-                              {ticketCompleteByDate}
-                            </p>
-                          </div>
-                        </div>
-                      )
-                    ) : null}
-                  </div>
+                      </div>
+                    )
+                  ) : null}
                 </div>
-              );
-            })
-          : null}
+              </div>
+            );
+          })
+        ) : (
+          <div className="flex justify-center mt-4">
+            <p>There are no service requests assigned to your team.</p>
+          </div>
+        )}
       </div>
     </div>
   );

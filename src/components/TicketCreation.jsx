@@ -169,11 +169,14 @@ const TicketCreation = ({
             );
 
             if (newTicket) {
-              await uploadFile(
-                selectedFile,
-                newTicket.data.createdTicket.ticketNumber
-              );
               setCreateTicketActive(false);
+              if (selectedFile) {
+                await uploadFile(
+                  selectedFile,
+                  newTicket.data.createdTicket.ticketNumber
+                );
+              }
+
               // upload attachment here, we will need the new ticket number
             }
           } catch (error) {

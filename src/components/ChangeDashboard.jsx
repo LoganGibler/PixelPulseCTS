@@ -8,6 +8,7 @@ import { getTeamsTickets } from "../api/tickets";
 import { TbExchange } from "react-icons/tb";
 import { TbAlertTriangle } from "react-icons/tb";
 import { useNavigate } from "react-router";
+import { getAllUnresolvedTickets } from "../api/tickets";
 import moment from "moment";
 
 const ChangeDashboard = ({ userData }) => {
@@ -17,7 +18,7 @@ const ChangeDashboard = ({ userData }) => {
 
   async function fetchChangeTickets(type, userData) {
     // will need to change query to only query changes being implemented during the period, aka- January 1st - january 7th
-    const tickets = await getTeamsTickets(type, userData);
+    const tickets = await getAllUnresolvedTickets("Change");
     if (tickets === undefined || tickets.length === 0) {
       return;
     }
@@ -60,7 +61,7 @@ const ChangeDashboard = ({ userData }) => {
   }, [userData]);
 
   return (
-    <div className="flex flex-col text-white grow md:border-l-8 border-slate-700">
+    <div className="flex flex-col text-white grow md:border-l-8 border-slate-700 min-h-[700px]">
       <div className="bg-slate-700 px-2 py-2 flex">
         <TbExchange className="text-lg mt-1" />
         <p className="font-semibold pl-2">Changes This Week</p>
@@ -78,7 +79,7 @@ const ChangeDashboard = ({ userData }) => {
       </div>
 
       <div className="max-h-[650px] overflow-y-scroll">
-        {changeTickets ? (
+        {changeTickets.length ? (
           changeTickets.map((ticket, index) => {
             if (index % 2 === 0) {
               var elementClassname =
@@ -129,7 +130,7 @@ const ChangeDashboard = ({ userData }) => {
                     Start: <span className="text-black">{ticketStartDate}</span>
                   </p>
                   {ticket.elevatedAccess ? (
-                    <div className="hidden lg:flex mt-[2px] ml-2 text-xs text-red-600">
+                    <div className="hidden lg:flex mt-[0px] ml-2 text-xs text-red-600">
                       <TbAlertTriangle className="text-base mt-[1px] mr-1" />
                       <p className="mt-[1px]">
                         This change requires elevated access.

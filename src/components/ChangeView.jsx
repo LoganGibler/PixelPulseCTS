@@ -48,6 +48,9 @@ const ChangeView = ({
   } else if (ticketValues.status === "PendingApproval") {
     var ticketStatusClass =
       "bg-orange-200 border-2 text-orange-500 border-orange-600  rounded-md px-1 text-center py-[1px] font-bold hover:cursor-pointer";
+  } else if (ticketValues.status === "Closed") {
+    var ticketStatusClass =
+      "bg-stone-700 border-2 text-stone-100 border-stone-600  rounded-md px-1 text-center py-[1px] font-bold hover:cursor-pointer";
   }
 
   const implementationStartDate = new Date(ticketValues.implementationStart);
@@ -118,6 +121,9 @@ const ChangeView = ({
                     className="bg-slate-100 text-black"
                   >
                     PendingApproval
+                  </option>
+                  <option value="Closed" className="bg-slate-100 text-black">
+                    Closed
                   </option>
                 </select>
               </div>
