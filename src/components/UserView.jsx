@@ -32,7 +32,9 @@ const UserView = () => {
   };
 
   const fetchUsersTeamsInfo = async (teams) => {
+    console.log("This is passed in Teams: ", teams);
     const userTeams = await getTeamData(teams);
+    console.log(userTeams);
     setUserTeamsInfo(userTeams);
     for (let i = 0; i < userTeams.length; i++) {
       const foundUsers = await getTeamMembers(teams[i]);
@@ -95,6 +97,9 @@ const UserView = () => {
         <div>
           {userTeamsInfo.length
             ? userTeamsInfo.map((team, index) => {
+                if (!team || !team.teamName || team === null) {
+                  return;
+                }
                 return (
                   <div
                     className="px-4 py-2 border-2 mt-3 mb-3 rounded-md"

@@ -181,6 +181,7 @@ function App() {
                   setMoreMenuActive={setMoreMenuActive}
                   createTicketActive={createTicketActive}
                   setCreateTicketActive={setCreateTicketActive}
+                  setIsLoggedIn={setIsLoggedIn}
                 />
                 <ProtectedRoute
                   element={UserList}
@@ -207,6 +208,7 @@ function App() {
                   setMoreMenuActive={setMoreMenuActive}
                   createTicketActive={createTicketActive}
                   setCreateTicketActive={setCreateTicketActive}
+                  setIsLoggedIn={setIsLoggedIn}
                 />
                 <ProtectedRoute
                   element={TicketView}
@@ -230,6 +232,7 @@ function App() {
                   setMoreMenuActive={setMoreMenuActive}
                   createTicketActive={createTicketActive}
                   setCreateTicketActive={setCreateTicketActive}
+                  setIsLoggedIn={setIsLoggedIn}
                 />
                 <ProtectedRoute
                   element={UserView}
@@ -253,6 +256,7 @@ function App() {
                   setMoreMenuActive={setMoreMenuActive}
                   createTicketActive={createTicketActive}
                   setCreateTicketActive={setCreateTicketActive}
+                  setIsLoggedIn={setIsLoggedIn}
                 />
                 <ProtectedRoute
                   element={TeamsList}
@@ -276,6 +280,7 @@ function App() {
                   setMoreMenuActive={setMoreMenuActive}
                   createTicketActive={createTicketActive}
                   setCreateTicketActive={setCreateTicketActive}
+                  setIsLoggedIn={setIsLoggedIn}
                 />
                 <ProtectedRoute
                   element={TeamView}

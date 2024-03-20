@@ -423,12 +423,12 @@ const ChangeView = ({
                     <div className="flex mt-4 py-1">
                       {formatTimestamp(task.completeBy) ===
                       "12/31/1969, 7:00 PM" ? (
-                        <p className="text-blue-700 font-bold px-3.5 mt-[4px]">
+                        <p className="text-blue-700 font-bold px-3.5 mt-[4px] whitespace-nowrap">
                           Complete:{" "}
                           <span className="text-black">In Succession</span>
                         </p>
                       ) : (
-                        <p className="text-blue-500 px-3.5 mt-[4px] font-bold">
+                        <p className="text-blue-500 px-3.5 mt-[4px] font-bold whitespace-nowrap">
                           Complete at:{" "}
                           <span className="text-black">
                             {formatTimestamp(task.completeBy)}
@@ -439,7 +439,7 @@ const ChangeView = ({
                       <div className="flex justify-end grow mr-4">
                         {userData.team.includes(task.assignedTeam) ? (
                           <button
-                            className="flex border-2 border-red-600 px-2 text-red-500 bg-red-200 py-0.5 rounded-md"
+                            className="flex whitespace-nowrap border-2 border-red-600 px-2 text-red-500 bg-red-200 py-0.5 rounded-md"
                             onClick={(e) => {
                               handleTaskDelete(task._id);
                               fetchTicketInfo();

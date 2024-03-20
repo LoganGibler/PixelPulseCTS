@@ -134,6 +134,7 @@ export async function getTeamData(teams) {
         },
       }
     );
+    console.log(response.data);
     return response.data.teamData;
   } catch (error) {
     console.error(error);
