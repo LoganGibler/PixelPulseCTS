@@ -108,16 +108,16 @@ const IncidentDash = ({ userData }) => {
 
               if (ticket.status === "Active") {
                 var ticketStatusClass =
-                  "flex px-4 py-0.5 border-2 rounded-md bg-red-300 text-red-700 border-red-600 whitespace-nowrap";
+                  "flex px-2 sm:px-4 py-0.5 border-2 rounded-md bg-red-300 text-red-700 border-red-600 whitespace-nowrap";
               } else if (ticket.status === "Resolved") {
                 var ticketStatusClass =
-                  "flex px-4 py-0.5 border-2 rounded-md bg-green-300 text-green-700 border-green-600 whitespace-nowrap";
+                  "flex px-2 sm:px-4 py-0.5 border-2 rounded-md bg-green-300 text-green-700 border-green-600 whitespace-nowrap";
               } else if (ticket.status === "Submitted") {
                 var ticketStatusClass =
-                  "flex px-4 py-0.5 border-2 rounded-md bg-purple-300 text-purple-700 border-purple-600 whitespace-nowrap";
+                  "flex px-2 sm:px-4 py-0.5 border-2 rounded-md bg-purple-300 text-purple-700 border-purple-600 whitespace-nowrap";
               } else if (ticket.status === "Waiting for 3rd Party") {
                 var ticketStatusClass =
-                  "flex px-4 py-0.5 border-2 rounded-md bg-yellow-300 text-yellow-700 border-yellow-600 whitespace-nowrap";
+                  "flex px-2 sm:px-4 py-0.5 border-2 rounded-md bg-yellow-300 text-yellow-700 border-yellow-600 whitespace-nowrap";
               }
 
               if (ticket.status === "Closed") {

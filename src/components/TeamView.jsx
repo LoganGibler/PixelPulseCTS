@@ -6,11 +6,13 @@ import { AiOutlineMail } from "react-icons/ai";
 import { FaPager } from "react-icons/fa6";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { CgProfile } from "react-icons/cg";
+import { useNavigate } from "react-router";
 
 const TeamView = () => {
   const { id } = useParams();
   const [team, setTeam] = useState([]);
   const [teamMembers, setTeamMembers] = useState([]);
+  const navigate = useNavigate();
 
   const fetchTeamData = async (id) => {
     const fetchedTeam = await getTeamById(id);
@@ -58,21 +60,24 @@ const TeamView = () => {
                   return (
                     <div
                       key={index}
+                      onClick={() => {
+                        navigate("/user/" + member._id)
+                      }}
                       className="flex my-1 py-1 bg-slate-100 hover:cursor-pointer hover:bg-white px-2 rounded-md border-2"
                     >
                       <CgProfile className="text-blue-700 mt-[4px] text-lg mr-2" />
                       <p className="font-semibold"> {member.name}</p>
 
                       <div className="flex grow justify-end">
-                        <div className="flex w-[260px]">
+                        <div className="hidden sm:flex w-[260px]">
                           <AiOutlineMail className="text-blue-700 mt-1 mr-1" />
                           <p>{member.email}</p>
                         </div>
-                        <div className="flex ml-1 w-[180px]">
+                        <div className="hidden sm:flex ml-1 w-[180px]">
                           <FaPager className="text-blue-700 mr-1 mt-[4px]" />
                           <p>{member.pagerPhone}</p>
                         </div>
-                        <div className="flex w-[150px]">
+                        <div className="hidden md:flex w-[150px]">
                           <HiOutlineBuildingOffice2 className="text-blue-700 mr-1 mt-[4px]" />
                           <p>{member.officePhone}</p>
                         </div>
@@ -86,7 +91,6 @@ const TeamView = () => {
             </div>
           </div>
           <div className="flex flex-col mt-10 border-b-2 pb-4">
-            <p className=""></p>
             <p className="">{team.description}</p>
           </div>
         </div>

@@ -160,3 +160,16 @@ export async function getTeamMembers(team) {
     console.error(error);
   }
 }
+
+export async function resetPassword(newPass, email) {
+  try {
+    const response = await axios.post(`${url}/user/resetPassword`, {
+      password: newPass,
+      email: email,
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+
+}

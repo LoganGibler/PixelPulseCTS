@@ -91,7 +91,7 @@ const UserList = ({
                     <CgProfile className="mt-[3px] mr-2 text-blue-700" />
                     {user.name}
                   </p>
-                  <p className="w-[220px] mt-[2px] text-ellipsis overflow-hidden whitespace-nowrap">
+                  <p className="hidden sm:flex w-[220px] mt-[2px] text-ellipsis overflow-hidden whitespace-nowrap">
                     {user.email}
                   </p>
                   <div className=" hidden lg:flex whitespace-nowrap w-[400px] overflow-hidden text-ellipsis">

@@ -39,8 +39,11 @@ const TeamsList = ({ userData, companyTeams }) => {
                     }}
                   >
                     <p className="font-semibold">{team.teamName}</p>
-                    <p>{team.teamEmail}</p>
-                    <p>{team.teamPager}</p>
+                    <p className="hidden sm:flex">{team.teamEmail}</p>
+                    <div className="hidden sm:flex">
+                      <FaPager className="mr-1 text-lg mt-[3px] text-blue-700" />
+                      <p>{team.teamPager}</p>
+                    </div>
                   </div>
                 );
               })

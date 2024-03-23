@@ -60,7 +60,7 @@ function App() {
             element={[
               <div
                 key="LoginPage"
-                className="flex grow justify-center bg-gradient h-screen"
+                className="flex grow justify-center bg-gradient min-h-screen"
               >
                 <Login
                   isLoggedIn={isLoggedIn}
@@ -305,6 +305,7 @@ function App() {
         {mobileMenuActive ? (
           <ProtectedRoute
             element={MobileMenu}
+            setCreateTicketActive={setCreateTicketActive}
             mobileMenuActive={mobileMenuActive}
             setMobileMenuActive={setMobileMenuActive}
           />

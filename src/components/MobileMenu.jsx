@@ -12,7 +12,11 @@ import { SiMicrosoftteams } from "react-icons/si";
 import { TbExchange } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 
-const MobileMenu = ({ mobileMenuActive, setMobileMenuActive }) => {
+const MobileMenu = ({
+  mobileMenuActive,
+  setMobileMenuActive,
+  setCreateTicketActive,
+}) => {
   const navigate = useNavigate();
   const handleMenuClick = async () => {
     setMobileMenuActive(!mobileMenuActive);
@@ -48,7 +52,8 @@ const MobileMenu = ({ mobileMenuActive, setMobileMenuActive }) => {
           <div
             className="flex py-2 px-3"
             onClick={async (e) => {
-              handleNavigate(e, "/createTicket");
+              setCreateTicketActive(true);
+              setMobileMenuActive(false);
             }}
           >
             <p>Create Ticket</p>
@@ -111,7 +116,13 @@ const MobileMenu = ({ mobileMenuActive, setMobileMenuActive }) => {
             </div>
           </div>
 
-          <div className="flex px-3 py-2 my-3">
+          <div
+            className="flex px-3 py-2 my-3"
+            onClick={() => {
+              navigate("/AllTeams");
+              setMobileMenuActive(false);
+            }}
+          >
             <SiMicrosoftteams className="text-2xl text-blue-600 mr-0.5" />
             <div className="flex grow justify-end">
               <p>All Teams</p>
@@ -131,6 +142,14 @@ const MobileMenu = ({ mobileMenuActive, setMobileMenuActive }) => {
               <p>All Users</p>
               <IoIosArrowForward className="text-base mt-[5px] ml-3" />
             </div>
+          </div>
+        </div>
+        <div className="flex grow justify-center">
+          <div>
+            {" "}
+            <button className="rounded-2xl bg-gradient py-1.5 mt-5 text-white tracking-wider hover:cursor-pointer transition ease-in-out delay-50ms bg-blue-500 hover:scale-105 hover:bg-indigo-500 duration-300">
+              LOGOUT
+            </button>
           </div>
         </div>
       </div>

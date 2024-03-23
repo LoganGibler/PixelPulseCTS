@@ -6,6 +6,7 @@ import { AiFillTwitterCircle } from "react-icons/ai";
 import { AiFillGoogleCircle } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { TbAlertTriangle } from "react-icons/tb";
+import PassReset from "./PassReset";
 
 import { loginUser } from "../api/user";
 
@@ -13,24 +14,37 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showLoginError, setShowLoginError] = useState(false);
+  const [showPassReset, setShowPassReset] = useState(false);
+  const [showPasswordResetSuccess, setShowPasswordResetSuccess] = useState(
+    false
+  );
   const navigate = useNavigate();
 
   return (
-    <div className="flex justify-center mt-[6rem]">
+    <div className="flex justify-center mt-[2rem] sm:mt-[6rem]">
       <form
         className="flex flex-col py-2 "
         onSubmit={async (e) => {
           e.preventDefault();
           const user = await loginUser(email, password);
           console.log("This is user: ", user);
-          // await fetchUserSession()
           if (user !== undefined) {
-            setIsLoggedIn(true);
-            navigate("/Dashboard");
-            window.location.reload();
+            if (password === import.meta.env.VITE_REACT_APP_PASS_CHECK) {
+              setShowPassReset(true);
+            } else {
+              setIsLoggedIn(true);
+              navigate("/Dashboard");
+              window.location.reload();
+            }
           } else {
             setShowLoginError(true);
           }
+
+          // if (user !== undefined) {
+          //
+          // } else {
+          //   setShowLoginError(true);
+          // }
         }}
       >
         <div className="flex flex-col bg-white px-8 py-8 rounded-lg">
@@ -61,13 +75,17 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
               }}
             ></input>
           </div>
-          <div className="flex justify-end text-sm mt-2">
-            <p className="hover:cursor-pointer">Forgot password?</p>
-          </div>
+          {!showPassReset ? (
+            <div className="flex justify-end text-sm mt-2">
+              <p className="hover:cursor-pointer">Forgot password?</p>
+            </div>
+          ) : null}
 
-          <button className="rounded-2xl bg-gradient py-1.5 mt-5 text-white tracking-wider hover:cursor-pointer transition ease-in-out delay-50ms bg-blue-500 hover:scale-105 hover:bg-indigo-500 duration-300">
-            LOGIN
-          </button>
+          {!showPassReset ? (
+            <button className="rounded-2xl bg-gradient py-1.5 mt-5 text-white tracking-wider hover:cursor-pointer transition ease-in-out delay-50ms bg-blue-500 hover:scale-105 hover:bg-indigo-500 duration-300">
+              LOGIN
+            </button>
+          ) : null}
 
           {showLoginError ? (
             <div className="flex justify-center mt-4">
@@ -76,6 +94,21 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
                 <p>Invalid Login</p>
               </div>
             </div>
+          ) : null}
+
+          {showPassReset ? (
+            <PassReset
+              email={email}
+              showPasswordResetSuccess={showPasswordResetSuccess}
+              setShowPasswordResetSuccess={setShowPasswordResetSuccess}
+              setShowPassReset={setShowPassReset}
+            />
+          ) : null}
+
+          {showPasswordResetSuccess ? (
+            <p className="text-sm mt-3">
+              Password reset successful. Please Login again.
+            </p>
           ) : null}
 
           <div className="flex justify-center text-sm mt-7">

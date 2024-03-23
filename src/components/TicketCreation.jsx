@@ -437,8 +437,8 @@ const TicketCreation = ({
           ></textarea>
         </div>
 
-        <div className="flex mt-5 px-1">
-          <p className="text-sm border-b-2 border-blue-700 mr-2">
+        <div className="flex flex-col sm:flex-row mt-5 px-1">
+          <p className="text-sm border-b-2 mb-2 sm:mb-0 border-blue-700 mr-2">
             Upload Attachment:{" "}
           </p>
           <input

@@ -26,3 +26,4 @@ export { default as ServiceRequestView } from "./ServiceRequestView";
 export { default as UserView } from "./UserView";
 export { default as TeamsList } from "./TeamsList";
 export { default as TeamView } from "./TeamView";
+export {default as PassReset} from "./PassReset";
