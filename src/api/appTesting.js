@@ -1,25 +1,25 @@
 import axios from "axios";
 const url = "http://localhost:8000";
 
-async function createManyUsers() {
-  try {
-    for (let i = 116; i < 130; i++) {
-      const response = await axios.post(`${url}/user/createUser`, {
-        name: "JohnDoe" + i,
-        email: "JohnDoe" + i + "@pixelpulse.tech",
-        role: "user",
-        team: ["Supply Chain"],
-        officePhone: "(+1) 555-555-5555",
-        pagerPhone: "(+1) 555-555-5555",
-      });
-      console.log(`User created: ${response.data.user.name}`);
-    }
-    console.log("All users created successfully!");
-  } catch (error) {
-    console.error("Error creating users:", error);
-    throw error; // Optional: rethrow the error if needed
-  }
-}
+// async function createManyUsers() {
+//   try {
+//     for (let i = 116; i < 130; i++) {
+//       const response = await axios.post(`${url}/user/createUser`, {
+//         name: "JohnDoe" + i,
+//         email: "JohnDoe" + i + "@pixelpulse.tech",
+//         role: "user",
+//         team: ["Supply Chain"],
+//         officePhone: "(+1) 555-555-5555",
+//         pagerPhone: "(+1) 555-555-5555",
+//       });
+//       console.log(`User created: ${response.data.user.name}`);
+//     }
+//     console.log("All users created successfully!");
+//   } catch (error) {
+//     console.error("Error creating users:", error);
+//     throw error; // Optional: rethrow the error if needed
+//   }
+// }
 
 // createManyUsers();
 

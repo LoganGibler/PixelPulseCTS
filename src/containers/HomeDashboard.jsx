@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {
   ChangeDashboard,
   IncidentDash,
@@ -7,6 +8,7 @@ import {
 } from "../components";
 
 const HomeDashboard = ({ userData }) => {
+  if (userData === null) return null;
   return (
     <div className="flex flex-col grow">
       <div className="flex flex-col md:flex-row grow">
@@ -19,6 +21,10 @@ const HomeDashboard = ({ userData }) => {
       </div>
     </div>
   );
+};
+
+HomeDashboard.propTypes = {
+  userData: PropTypes.object.isRequired,
 };
 
 export default HomeDashboard;
