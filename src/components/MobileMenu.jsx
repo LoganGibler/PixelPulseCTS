@@ -16,6 +16,7 @@ const MobileMenu = ({
   mobileMenuActive,
   setMobileMenuActive,
   setCreateTicketActive,
+  setIsLoggedIn,
 }) => {
   const navigate = useNavigate();
   const handleMenuClick = async () => {
@@ -26,6 +27,17 @@ const MobileMenu = ({
     navigate(route);
     setMobileMenuActive(false);
   };
+
+  async function deleteAllCookies() {
+    const cookies = document.cookie.split(";");
+
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i];
+      const eqPos = cookie.indexOf("=");
+      const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+  }
 
   return (
     <Transition
@@ -147,7 +159,15 @@ const MobileMenu = ({
         <div className="flex grow justify-center">
           <div>
             {" "}
-            <button className="rounded-2xl bg-gradient py-1.5 mt-5 text-white tracking-wider hover:cursor-pointer transition ease-in-out delay-50ms bg-blue-500 hover:scale-105 hover:bg-indigo-500 duration-300">
+            <button
+              onClick={async () => {
+                await deleteAllCookies();
+                setIsLoggedIn(false);
+                setMobileMenuActive(false);
+                navigate("/");
+              }}
+              className="rounded-2xl w-[100px] bg-gradient py-1.5 mt-5 text-white tracking-wider hover:cursor-pointer transition ease-in-out delay-50ms bg-blue-500 hover:scale-105 hover:bg-indigo-500 duration-300"
+            >
               LOGOUT
             </button>
           </div>

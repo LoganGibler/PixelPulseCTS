@@ -32,9 +32,9 @@ const UserView = () => {
   };
 
   const fetchUsersTeamsInfo = async (teams) => {
-    console.log("This is passed in Teams: ", teams);
+    // console.log("This is passed in Teams: ", teams);
     const userTeams = await getTeamData(teams);
-    console.log(userTeams);
+    // console.log(userTeams);
     setUserTeamsInfo(userTeams);
     for (let i = 0; i < userTeams.length; i++) {
       const foundUsers = await getTeamMembers(teams[i]);

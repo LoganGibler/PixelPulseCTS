@@ -22,13 +22,6 @@ const CreateTask = ({
       onSubmit={async (e) => {
         e.preventDefault();
         try {
-          console.log(
-            ticketNumber,
-            assignedTeam,
-            description,
-            completeBy,
-            userData.name
-          );
           const newTask = await createTask(
             ticketNumber,
             assignedTeam,
@@ -83,7 +76,6 @@ const CreateTask = ({
           className="px-1 ml-2 rounded-md text-black"
           onChange={(e) => {
             setCompleteBy(e.target.value);
-            console.log("Complete By: " + e.target.value);
           }}
         />
       </div>

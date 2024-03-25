@@ -34,7 +34,7 @@ const TicketCreation = ({
   const convertToDateCompleteBy = async (date) => {
     try {
       const dateValue = new Date(date);
-      console.log(dateValue);
+
       setCompleteBy(dateValue);
     } catch (error) {
       throw error;
@@ -55,7 +55,7 @@ const TicketCreation = ({
     try {
       let selectedGroup = document.getElementById("accessDescription");
       let output = selectedGroup.options[selectedGroup.selectedIndex].value;
-      console.log(output);
+
       setElevatedAccess(output);
     } catch (error) {
       console.error(error);
@@ -129,7 +129,6 @@ const TicketCreation = ({
   };
 
   const uploadFile = async (file, ticketNumber) => {
-    console.log("HERE IS PARAMS", file, ticketNumber);
     const storageRef = ref(
       storage,
       `TicketAttachments/${ticketNumber}/${file.name}`
@@ -161,11 +160,6 @@ const TicketCreation = ({
               elevatedAccess,
               relatedTicket,
               emergency
-            );
-
-            console.log(
-              "!!!!!!!!!!!!!!!",
-              newTicket.data.createdTicket.ticketNumber
             );
 
             if (newTicket) {

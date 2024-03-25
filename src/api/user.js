@@ -41,7 +41,7 @@ export async function createUser(
         },
       }
     );
-    console.log("HERE is created user: ", createUser);
+
     return createdUser.data;
   } catch (error) {
     throw error;
@@ -134,7 +134,7 @@ export async function getTeamData(teams) {
         },
       }
     );
-    console.log(response.data);
+  
     return response.data.teamData;
   } catch (error) {
     console.error(error);

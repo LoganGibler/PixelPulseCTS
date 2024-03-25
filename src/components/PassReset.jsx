@@ -94,7 +94,7 @@ const PassReset = ({
             newPass === confirmPass
           ) {
             const newPassword = await resetPassword(newPass, email);
-            console.log("newPassword", newPassword);
+            // console.log("newPassword", newPassword);
             if (newPassword !== undefined) {
               setShowPasswordResetSuccess(true);
               setShowPassReset(false);

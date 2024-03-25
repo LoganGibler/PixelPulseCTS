@@ -57,7 +57,7 @@ export async function getTeamsTickets(type, userData) {
 
 export async function claimTicket(guideID, userData) {
   try {
-    console.log(userData.name);
+    // console.log(userData.name);
     const response = await axios.post(
       `${url}/ticket/assignTicket`,
       {
@@ -71,7 +71,7 @@ export async function claimTicket(guideID, userData) {
         },
       }
     );
-    console.log(response);
+    // console.log(response);
   } catch (error) {
     console.log(error);
   }
@@ -122,7 +122,7 @@ export async function createTicket(
         },
       }
     );
-    console.log(response);
+    // console.log(response);
     return response;
   } catch (error) {
     console.log(error);
@@ -197,7 +197,7 @@ export async function findTicketByTicketNumber(ticketNumber) {
 }
 
 export async function updateTicket(ticketValues, user) {
-  console.log(ticketValues);
+  // console.log(ticketValues);
   try {
     const response = await axios.post(
       `${url}/ticket/updateTicket`,
@@ -213,7 +213,7 @@ export async function updateTicket(ticketValues, user) {
       }
     );
 
-    console.log(response);
+    // console.log(response);
     return response;
   } catch (error) {
     console.error(error);

@@ -48,7 +48,7 @@ export async function claimTask(taskID, user) {
         },
       }
     );
-    console.log(response);
+    // console.log(response);
     return response;
   } catch (error) {
     throw error;
@@ -145,7 +145,7 @@ export async function createTask(
         },
       }
     );
-    console.log(response);
+    // console.log(response);
     return "Task Created!";
   } catch (error) {
     console.log(error);

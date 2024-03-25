@@ -308,6 +308,7 @@ function App() {
             setCreateTicketActive={setCreateTicketActive}
             mobileMenuActive={mobileMenuActive}
             setMobileMenuActive={setMobileMenuActive}
+            setIsLoggedIn={setIsLoggedIn}
           />
         ) : null}
         {mobileMenuActive ||

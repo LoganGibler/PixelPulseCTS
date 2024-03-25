@@ -28,7 +28,7 @@ const ChangeTasks = ({
               "bg-purple-300 border-2 text-purple-500 border-purple-600  rounded-md px-0.5 sm:px-3 text-center py-[1px] font-bold hover:cursor-pointer text-xs sm:text-sm";
           }
 
-          console.log(task);
+          
 
           return (
             <div

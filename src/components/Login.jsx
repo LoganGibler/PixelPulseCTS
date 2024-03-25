@@ -15,9 +15,8 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
   const [password, setPassword] = useState("");
   const [showLoginError, setShowLoginError] = useState(false);
   const [showPassReset, setShowPassReset] = useState(false);
-  const [showPasswordResetSuccess, setShowPasswordResetSuccess] = useState(
-    false
-  );
+  const [showPasswordResetSuccess, setShowPasswordResetSuccess] =
+    useState(false);
   const navigate = useNavigate();
 
   return (
@@ -86,6 +85,11 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
               LOGIN
             </button>
           ) : null}
+
+          <div className="flex flex-col text-sm mt-3 text-slate-400">
+            <p>User: SampleUser@pixelpulse.tech</p>
+            <p>Pass: Password3!</p>
+          </div>
 
           {showLoginError ? (
             <div className="flex justify-center mt-4">
