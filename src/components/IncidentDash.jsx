@@ -117,7 +117,7 @@ const IncidentDash = ({ userData }) => {
                   "flex px-2 sm:px-4 py-0.5 border-2 rounded-md bg-purple-300 text-purple-700 border-purple-600 whitespace-nowrap";
               } else if (ticket.status === "Waiting for 3rd Party") {
                 var ticketStatusClass =
-                  "flex px-2 sm:px-4 py-0.5 border-2 rounded-md bg-yellow-300 text-yellow-700 border-yellow-600 whitespace-nowrap";
+                  "flex px-2 sm:px-4 py-0.5 border-2 rounded-md bg-yellow-300 text-yellow-700 border-yellow-600 whitespace-nowrap max-w-[120px] sm:max-w-[200px] overflow-hidden text-ellipsis";
               }
 
               if (ticket.status === "Closed") {
