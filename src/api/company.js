@@ -1,6 +1,6 @@
 import axios from "axios";
-const url = "https://pixelpulseapi-0sgu.onrender.com";
-// const url = "http://localhost:8000";
+// const url = "https://pixelpulseapi-0sgu.onrender.com";
+const url = "http://localhost:8000";
 
 const headersTemp = document.cookie.split(";"); // <-- this get all cookies saves and splits them in the array.
 const finalHeaders = {};
