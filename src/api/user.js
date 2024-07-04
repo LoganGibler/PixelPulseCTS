@@ -134,7 +134,7 @@ export async function getTeamData(teams) {
         },
       }
     );
-  
+
     return response.data.teamData;
   } catch (error) {
     console.error(error);
@@ -171,5 +171,4 @@ export async function resetPassword(newPass, email) {
   } catch (error) {
     console.error(error);
   }
-
 }
