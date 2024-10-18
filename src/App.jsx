@@ -58,10 +58,7 @@ function App() {
           <Route
             path="/"
             element={[
-              <div
-                key="LoginPage"
-                className="flex grow justify-center bg-gradient min-h-screen"
-              >
+              <div key="LoginPage" className="flex bg-gradient min-h-screen">
                 <Login
                   isLoggedIn={isLoggedIn}
                   setIsLoggedIn={setIsLoggedIn}
