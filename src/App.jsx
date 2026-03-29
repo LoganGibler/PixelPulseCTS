@@ -60,7 +60,7 @@ function App() {
             element={[
               <div
                 key="LoginPage"
-                className="flex grow justify-center bg-gradient min-h-screen"
+                className="flex grow items-center justify-center bg-gradient min-h-screen"
               >
                 <Login
                   isLoggedIn={isLoggedIn}
@@ -161,7 +161,7 @@ function App() {
                   createTicketActive={createTicketActive}
                   setCreateTicketActive={setCreateTicketActive}
                 />
-                <div className="flex">
+                <div className="flex bg-slate-100 min-h-screen">
                   <ProtectedRoute element={HomeDashboard} userData={userData} />
                 </div>
               </div>,

@@ -10,7 +10,6 @@ import { useNavigate } from "react-router";
 const TaskDashboard = ({ userData }) => {
   const navigate = useNavigate();
   const [tasks, setTasks] = useState([]);
-  // if false, sort by completionDate. if true, reverse that order.
   const [sort, setSort] = useState(false);
 
   async function fetchUserTasks(team) {
@@ -66,17 +65,17 @@ const TaskDashboard = ({ userData }) => {
   }, [userData]);
 
   return (
-    <div className="flex flex-col md:max-w-[400px] grow md:w-[370px] lg:w-[650px]">
-      <div className="flex px-3 bg-slate-700 text-white py-2 mb-1">
-        <FaTasks className="mr-3 mt-1" />
-        <p className="font-semibold">Assigned Tasks</p>
-        <div className="flex grow justify-end mt-0.5">
+    <div className="flex flex-col grow rounded-xl overflow-hidden shadow-md border border-slate-200 bg-white">
+      <div className="flex px-3 panel-header text-white py-3 border-b border-white/20 items-center">
+        <FaTasks className="mr-2 text-white" />
+        <p className="font-semibold text-sm tracking-wide">Assigned Tasks</p>
+        <div className="flex grow justify-end items-center gap-3">
           <BiSort
-            className="text-lg mt-[1px] mr-2 hover:cursor-pointer"
+            className="text-lg hover:cursor-pointer hover:text-white/70 transition-colors"
             onClick={(e) => sortByCompletionDate()}
           />
           <GrUpdate
-            className="mt-[1px] ml-0.5 hover:cursor-pointer"
+            className="text-sm hover:cursor-pointer hover:text-white/70 transition-colors"
             onClick={handleRefreshTasks}
           />
         </div>
@@ -88,24 +87,24 @@ const TaskDashboard = ({ userData }) => {
             const completeby = formatTimestamp(task.completeBy);
             if (index % 2 === 0) {
               var elementClassname =
-                "text-sm px-3 py-3 border-b-[1px] hover:cursor-pointer";
+                "text-sm px-3 py-3 border-b border-slate-100 hover:cursor-pointer hover:bg-indigo-50 transition-colors duration-150";
             } else {
               var elementClassname =
-                "text-sm px-3 py-3 border-b-[1px] hover:cursor-pointer bg-gray-200";
+                "text-sm px-3 py-3 border-b border-slate-100 hover:cursor-pointer bg-slate-50 hover:bg-indigo-50 transition-colors duration-150";
             }
 
             if (task.status === "Active") {
               var taskStatusClass =
-                "flex px-4 py-0.5 text-xs border-2 rounded-md bg-red-300 text-red-700 border-red-600";
+                "flex px-3 py-0.5 text-xs border rounded-full bg-red-100 text-red-700 border-red-300 font-medium";
             } else if (task.status === "Complete") {
               var taskStatusClass =
-                "flex px-4 py-0.5 text-xs border-2 rounded-md bg-green-300 text-green-700 border-green-600";
+                "flex px-3 py-0.5 text-xs border rounded-full bg-green-100 text-green-700 border-green-300 font-medium";
             } else if (task.status === "Submitted") {
               var taskStatusClass =
-                "flex px-4 py-0.5 text-xs border-2 rounded-md bg-purple-300 text-purple-700 border-purple-600";
+                "flex px-3 py-0.5 text-xs border rounded-full bg-purple-100 text-purple-700 border-purple-300 font-medium";
             } else if (task.status === "Accepted") {
               var taskStatusClass =
-                "flex px-4 py-0.5 text-xs border-2 rounded-md bg-yellow-300 text-yellow-700 border-yellow-600";
+                "flex px-3 py-0.5 text-xs border rounded-full bg-yellow-100 text-yellow-700 border-yellow-300 font-medium";
             }
 
             return (
@@ -114,26 +113,26 @@ const TaskDashboard = ({ userData }) => {
                 className={elementClassname}
                 onClick={() => navigate("/ticket/" + task.linkedTicketNumber)}
               >
-                <div className="flex">
-                  <p className="text-blue-700 whitespace-nowrap">
+                <div className="flex items-center">
+                  <p className="text-indigo-500 whitespace-nowrap text-xs">
                     Task for Change:{" "}
-                    <span className="text-black">
+                    <span className="text-slate-700 font-semibold">
                       #{task.linkedTicketNumber}
                     </span>
                   </p>
-                  <p className="pl-2 overflow-hidden text-ellipsis whitespace-nowrap max-w-[178px]">
+                  <p className="pl-2 overflow-hidden text-ellipsis whitespace-nowrap max-w-[178px] text-slate-800 font-medium">
                     {task.title}
                   </p>
                 </div>
                 {task.assignedPerson === "" ? (
-                  <div className="flex py-1 mt-2 px-0">
-                    <p className="text-blue-700">
+                  <div className="flex py-1 mt-1.5 px-0 items-center">
+                    <p className="text-indigo-500 text-xs">
                       Submitter:{" "}
-                      <span className="text-black">{task.submitter}</span>
+                      <span className="text-slate-700 font-medium">{task.submitter}</span>
                     </p>
                     <div className="flex grow justify-end">
                       <button
-                        className="bg-gradient px-3 text-white rounded-md"
+                        className="bg-gradient px-4 py-1 text-white rounded-full text-xs font-semibold hover:opacity-90 transition-opacity shadow-sm"
                         onClick={(e) => {
                           e.stopPropagation();
                           handleTaskClaim(task._id, userData.name);
@@ -144,16 +143,13 @@ const TaskDashboard = ({ userData }) => {
                     </div>
                   </div>
                 ) : (
-                  <div className="flex px-0 mt-2.5">
-                    <p className="text-blue-700">
+                  <div className="flex px-0 mt-2 items-center">
+                    <p className="text-indigo-500 text-xs">
                       Assigned to:{" "}
-                      <span className="text-black">{task.assignedPerson}</span>
+                      <span className="text-slate-700 font-medium">{task.assignedPerson}</span>
                     </p>
                     <div className="flex justify-end grow">
-                      <div>
-                        {" "}
-                        <p className={taskStatusClass}>{task.status}</p>
-                      </div>
+                      <p className={taskStatusClass}>{task.status}</p>
                     </div>
                   </div>
                 )}
@@ -161,7 +157,7 @@ const TaskDashboard = ({ userData }) => {
             );
           })
         ) : (
-          <div className="flex justify-center py-3 text-sm">
+          <div className="flex justify-center py-8 text-sm text-slate-400">
             <p>You have no assigned tasks.</p>
           </div>
         )}

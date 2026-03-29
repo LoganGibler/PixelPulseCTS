@@ -21,7 +21,6 @@ const Navbar = ({
   const navigate = useNavigate();
 
   async function fetchUserData(userData) {
-    // console.log(userData, "This is userData.");
     if (!userData.name) {
       return;
     } else {
@@ -50,8 +49,8 @@ const Navbar = ({
   }, [userData]);
 
   return (
-    <div className="bg-gradient flex px-6 py-3 z-20">
-      <h1 className="text-white font-semibold text-xl">PixelPulse CTS</h1>
+    <div className="bg-gradient flex px-6 py-3 z-20 shadow-lg">
+      <h1 className="text-white font-bold text-xl tracking-wide">PixelPulse CTS</h1>
       <div className="flex justify-end grow text-white text-[24px] mt-[2px] md:hidden">
         {!mobileMenuActive ? (
           <RiMenu3Line className="" onClick={handleHamburgerClick} />
@@ -59,28 +58,28 @@ const Navbar = ({
           <RiCloseLine className="" onClick={handleHamburgerClick} />
         )}
       </div>
-      <div className="hidden md:flex grow justify-end text-slate-100 font-semibold mt-[4px] ml-0">
+      <div className="hidden md:flex grow justify-end text-slate-100 font-semibold mt-[2px] ml-0 items-center">
         <p
-          className="mx-1.5 px-2 hover:text-slate-200 hover:cursor-pointer"
+          className="mx-1 px-3 py-1.5 rounded-full hover:bg-white/20 hover:cursor-pointer transition-all duration-200 text-sm"
           onClick={(e) => setCreateTicketActive(true)}
         >
           Create Ticket
         </p>
         <p
-          className="mx-1.5 px-2 hover:text-slate-200 hover:cursor-pointer"
+          className="mx-1 px-3 py-1.5 rounded-full hover:bg-white/20 hover:cursor-pointer transition-all duration-200 text-sm"
           onClick={(e) => navigate("/Dashboard")}
         >
           Team Dashboard
         </p>
         <p
-          className="mx-1.5 px-2 hover:text-slate-200 hover:cursor-pointer"
+          className="mx-1 px-3 py-1.5 rounded-full hover:bg-white/20 hover:cursor-pointer transition-all duration-200 text-sm"
           onClick={() => navigate("/AllChanges")}
         >
           Changes
         </p>
-        <div className=" flex lg:hidden">
+        <div className="flex lg:hidden">
           <p
-            className="mx-1 px-2 hover:text-slate-200 hover:cursor-pointer"
+            className="mx-1 px-3 py-1.5 rounded-full hover:bg-white/20 hover:cursor-pointer transition-all duration-200 text-sm"
             onClick={(e) => setMoreMenuActive(!moreMenuActive)}
           >
             More...
@@ -93,22 +92,22 @@ const Navbar = ({
           ) : null}
         </div>
       </div>
-      <div className="hidden lg:flex text-slate-100 font-semibold mt-[4px]">
+      <div className="hidden lg:flex text-slate-100 font-semibold items-center">
         <p
-          className="mx-1 px-2 hover:text-slate-200 hover:cursor-pointer"
+          className="mx-1 px-3 py-1.5 rounded-full hover:bg-white/20 hover:cursor-pointer transition-all duration-200 text-sm"
           onClick={(e) => navigate("/AllIncidents")}
         >
           Incidents
         </p>
         <p
-          className="mx-1 px-2 hover:text-slate-200 hover:cursor-pointer"
+          className="mx-1 px-3 py-1.5 rounded-full hover:bg-white/20 hover:cursor-pointer transition-all duration-200 text-sm"
           onClick={() => navigate("/AllServiceRequests")}
         >
           Service Requests
         </p>
         <div>
           <p
-            className="mx-1 px-2 hover:text-slate-200 hover:cursor-pointer"
+            className="mx-1 px-3 py-1.5 rounded-full hover:bg-white/20 hover:cursor-pointer transition-all duration-200 text-sm"
             onClick={(e) => setMoreMenuActive(!moreMenuActive)}
           >
             More...
@@ -117,29 +116,29 @@ const Navbar = ({
             <MoreMenu
               moreMenuActive={moreMenuActive}
               setMoreMenuActive={setMoreMenuActive}
-              // onClick={() => setMoreMenuActive(!moreMenuActive)}
             />
           ) : null}
         </div>
       </div>
-      <div className=" hidden md:flex flex-col grow">
+      <div className="hidden md:flex flex-col grow">
         <div
-          className="hidden md:flex grow justify-end text-slate-100 text-xs hover:cursor-pointer"
+          className="hidden md:flex grow justify-end text-slate-100 text-xs hover:cursor-pointer items-center"
           onClick={() => setShowUserMenu(!showUserMenu)}
         >
-          <CgProfile className="text-2xl mt-1 mr-2" />
-          <div>
-            <p className="font-semibold">{username}</p>
-            <p>{team}</p>
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-white/20 transition-all duration-200">
+            <CgProfile className="text-2xl" />
+            <div>
+              <p className="font-semibold text-sm">{username}</p>
+              <p className="text-white/70">{team}</p>
+            </div>
           </div>
         </div>
 
         {showUserMenu ? (
-          <div className="absolute w-[150px] z-10 bg-slate-100 mt-10 right-1 px-2 rounded-sm pb-2">
-            <div className="flex flex-col justify-center">
-              {" "}
+          <div className="absolute w-[170px] z-10 bg-white mt-12 right-2 px-2 rounded-xl pb-3 pt-1 shadow-2xl border border-slate-100">
+            <div className="flex flex-col">
               <p
-                className="py-1 hover:cursor-pointer"
+                className="py-2 px-2 hover:cursor-pointer hover:bg-slate-50 rounded-lg transition-colors text-sm font-medium text-slate-700"
                 onClick={() => {
                   navigate("/user/" + userData._id);
                   setShowUserMenu(false);
@@ -147,9 +146,11 @@ const Navbar = ({
               >
                 Profile
               </p>
-              <p className="py-1 hover:cursor-pointer">Manage Team</p>
+              <p className="py-2 px-2 hover:cursor-pointer hover:bg-slate-50 rounded-lg transition-colors text-sm font-medium text-slate-700">
+                Manage Team
+              </p>
               <button
-                className="bg-gradient py-1 mt-2 rounded-md text-white"
+                className="bg-gradient py-2 mt-1 rounded-lg text-white font-semibold text-sm hover:opacity-90 transition-opacity w-full"
                 onClick={async (e) => {
                   await deleteAllCookies();
                   setIsLoggedIn(false);
@@ -157,7 +158,7 @@ const Navbar = ({
                   navigate("/");
                 }}
               >
-                Signout
+                Sign Out
               </button>
             </div>
           </div>

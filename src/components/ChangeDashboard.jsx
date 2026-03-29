@@ -17,7 +17,6 @@ const ChangeDashboard = ({ userData }) => {
   const [sort, setSort] = useState(false);
 
   async function fetchChangeTickets(type, userData) {
-    // will need to change query to only query changes being implemented during the period, aka- January 1st - january 7th
     const tickets = await getAllUnresolvedTickets("Change");
     if (tickets === undefined || tickets.length === 0) {
       return;
@@ -61,18 +60,17 @@ const ChangeDashboard = ({ userData }) => {
   }, [userData]);
 
   return (
-    <div className="flex flex-col text-white grow md:border-l-8 border-slate-700 min-h-[700px]">
-      <div className="bg-slate-700 px-2 py-2 flex">
-        <TbExchange className="text-lg mt-1" />
-        <p className="font-semibold pl-2">Changes This Week</p>
-        <div className="flex grow justify-end">
+    <div className="flex flex-col grow rounded-xl overflow-hidden shadow-md border border-slate-200 bg-white min-h-[700px]">
+      <div className="panel-header px-3 py-3 flex items-center border-b border-white/20">
+        <TbExchange className="text-lg text-white mr-2" />
+        <p className="font-semibold text-white text-sm tracking-wide">Changes This Week</p>
+        <div className="flex grow justify-end items-center gap-3">
           <BiSort
-            className="text-lg mt-[2px] mr-1 hover:cursor-pointer"
+            className="text-lg text-white hover:cursor-pointer hover:text-white/70 transition-colors"
             onClick={sortByDate}
           />
-
           <GrUpdate
-            className="mr-1 mt-[3px] ml-1 hover:cursor-pointer"
+            className="text-sm text-white hover:cursor-pointer hover:text-white/70 transition-colors"
             onClick={() => fetchChangeTickets("Change", userData)}
           />
         </div>
@@ -83,28 +81,28 @@ const ChangeDashboard = ({ userData }) => {
           changeTickets.map((ticket, index) => {
             if (index % 2 === 0) {
               var elementClassname =
-                "flex flex-col text-sm px-3 py-3 border-b-[1px] text-black hover:cursor-pointer";
+                "flex flex-col text-sm px-3 py-3 border-b border-slate-100 text-slate-800 hover:cursor-pointer hover:bg-indigo-50 transition-colors duration-150";
             } else {
               var elementClassname =
-                "flex flex-col text-sm px-3 py-3 border-b-[1px] text-black hover:cursor-pointer bg-gray-200";
+                "flex flex-col text-sm px-3 py-3 border-b border-slate-100 text-slate-800 hover:cursor-pointer bg-slate-50 hover:bg-indigo-50 transition-colors duration-150";
             }
             const ticketStartDate = formatTimestamp(ticket.implementationStart);
 
             if (ticket.status === "Active") {
               var ticketStatusClass =
-                "flex px-4 py-0.5 border-2 rounded-md bg-red-300 text-red-700 border-red-600";
+                "flex px-3 py-0.5 border rounded-full bg-red-100 text-red-700 border-red-300 text-xs font-medium";
             } else if (ticket.status === "Complete") {
               var ticketStatusClass =
-                "flex px-4 py-0.5 border-2 rounded-md bg-green-300 text-green-700 border-green-600";
+                "flex px-3 py-0.5 border rounded-full bg-green-100 text-green-700 border-green-300 text-xs font-medium";
             } else if (ticket.status === "Submitted") {
               var ticketStatusClass =
-                "flex px-4 py-0.5 border-2 rounded-md bg-purple-300 text-purple-700 border-purple-600";
+                "flex px-3 py-0.5 border rounded-full bg-purple-100 text-purple-700 border-purple-300 text-xs font-medium";
             } else if (ticket.status === "Accepted") {
               var ticketStatusClass =
-                "flex px-4 py-0.5 border-2 rounded-md bg-yellow-300 text-yellow-700 border-yellow-600";
+                "flex px-3 py-0.5 border rounded-full bg-yellow-100 text-yellow-700 border-yellow-300 text-xs font-medium";
             } else if (ticket.status === "PendingApproval") {
               var ticketStatusClass =
-                "flex px-4 py-0.5 border-2 rounded-md bg-orange-300 text-orange-700 border-orange-600";
+                "flex px-3 py-0.5 border rounded-full bg-orange-100 text-orange-700 border-orange-300 text-xs font-medium";
             }
 
             return (
@@ -113,37 +111,33 @@ const ChangeDashboard = ({ userData }) => {
                 className={elementClassname}
                 onClick={() => navigate("/ticket/" + ticket.ticketNumber)}
               >
-                <div className="flex overflow-hidden text-ellipsis">
-                  <p>#{ticket.ticketNumber}</p>
-                  <p className="truncated-text-sm pl-3 pr-3 overflow-hidden font-semibold">
+                <div className="flex overflow-hidden text-ellipsis items-start">
+                  <p className="text-slate-400 font-medium whitespace-nowrap">#{ticket.ticketNumber}</p>
+                  <p className="truncated-text-sm pl-3 pr-3 overflow-hidden font-semibold text-slate-800">
                     {ticket.title}
                   </p>
-                  <div className="sm:flex hidden justify-end grow">
-                    <div className="">
-                      <p className={ticketStatusClass}>{ticket.status}</p>
-                    </div>
+                  <div className="sm:flex hidden justify-end grow flex-shrink-0">
+                    <p className={ticketStatusClass}>{ticket.status}</p>
                   </div>
                 </div>
 
-                <div className="flex mt-2.5 text-sm">
-                  <p className="text-blue-700 whitespace-nowrap">
-                    Start: <span className="text-black">{ticketStartDate}</span>
+                <div className="flex mt-2 text-xs items-center">
+                  <p className="text-indigo-500 whitespace-nowrap">
+                    Start: <span className="text-slate-700 font-semibold">{ticketStartDate}</span>
                   </p>
                   {ticket.elevatedAccess ? (
-                    <div className="hidden lg:flex mt-[0px] ml-2 text-xs text-red-600">
-                      <TbAlertTriangle className="text-base mt-[1px] mr-1" />
-                      <p className="mt-[1px]">
-                        This change requires elevated access.
-                      </p>
+                    <div className="hidden lg:flex ml-3 text-xs text-red-500 items-center">
+                      <TbAlertTriangle className="text-sm mr-1" />
+                      <p>Requires elevated access</p>
                     </div>
                   ) : null}
                   <div className="grow justify-end hidden sm:flex">
-                    <p className="text-blue-700">
+                    <p className="text-indigo-500">
                       {ticket.involvedTeams.map((team, index) => {
                         return (
                           <span
                             key={index}
-                            className="text-black px-1.5 border-r-[2px] border-green-500"
+                            className="text-slate-600 font-medium px-1.5 border-r-2 border-indigo-200 last:border-0"
                           >
                             {team}
                           </span>
@@ -156,7 +150,7 @@ const ChangeDashboard = ({ userData }) => {
             );
           })
         ) : (
-          <div className="text-black flex justify-center text-sm py-3">
+          <div className="flex justify-center py-8 text-sm text-slate-400">
             <div>No active changes this week.</div>
           </div>
         )}

@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaUserAlt } from "react-icons/fa";
 import { MdLock } from "react-icons/md";
-import { AiFillGithub } from "react-icons/ai";
-import { AiFillTwitterCircle } from "react-icons/ai";
-import { AiFillGoogleCircle } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { TbAlertTriangle } from "react-icons/tb";
 import PassReset from "./PassReset";
@@ -20,13 +17,12 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
 	const navigate = useNavigate();
 
 	return (
-		<div className="flex justify-center mt-[2rem] sm:mt-[6rem]">
+		<div className="flex justify-center px-4">
 			<form
-				className="flex flex-col py-2 "
+				className="flex flex-col"
 				onSubmit={async (e) => {
 					e.preventDefault();
 					const user = await loginUser(email, password);
-					// console.log("This is user: ", user);
 					if (user !== undefined) {
 						if (password === import.meta.env.VITE_REACT_APP_PASS_CHECK) {
 							setShowPassReset(true);
@@ -38,85 +34,86 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
 					} else {
 						setShowLoginError(true);
 					}
-
-					// if (user !== undefined) {
-					//
-					// } else {
-					//   setShowLoginError(true);
-					// }
 				}}
 			>
-				<div className="flex flex-col bg-white px-8 sm:w-[380px] sm:h-[500px] py-8 rounded-lg">
-					<div className="flex justify-center">
-						<h1 className="font-bold text-3xl">Sign in</h1>
-					</div>
-					<label className="text-sm mt-2">Email</label>
-					<div className="flex border-b-[1px] border-slate-400 pb-2 pt-1 text-slate-400">
-						<FaUserAlt className="text-lg mt-2 mr-1" />
-						<input
-							type="Email"
-							placeholder="Type your email"
-							className="px-2 grow py-1"
-							onChange={(e) => {
-								setEmail(e.target.value);
-							}}
-						></input>
-					</div>
-					<label className="text-sm mt-3">Password</label>
-					<div className="flex border-b-[1px] mt-0 border-slate-400 pb-2 pt-1 text-slate-400">
-						<MdLock className="text-lg mt-2 mr-1" />
-						<input
-							type="Password"
-							placeholder="Type your password"
-							className="px-2 bg-white grow py-1"
-							onChange={(e) => {
-								setPassword(e.target.value);
-							}}
-						></input>
-					</div>
-					{!showPassReset ? (
-						<div className="flex justify-end text-sm mt-2"></div>
-					) : null}
-
-					{!showPassReset ? (
-						<button className="rounded-2xl bg-gradient py-1.5 mt-5 text-white tracking-wider hover:cursor-pointer transition ease-in-out delay-50ms bg-blue-500 hover:scale-105 hover:bg-indigo-500 duration-300">
-							LOGIN
-						</button>
-					) : null}
-
-					<div className="flex flex-col text-sm mt-[2rem] text-slate-400">
-						<p>
-							<span className="text-black font-bold">User: </span>
-							SampleUser@pixelpulse.tech
-						</p>
-						<p>
-							<span className="text-black font-bold">Pass: </span> Password3!
-						</p>
+				<div className="flex flex-col bg-white sm:w-[400px] rounded-2xl shadow-2xl overflow-hidden">
+					{/* Gradient header */}
+					<div className="bg-gradient px-8 py-8">
+						<h1 className="font-bold text-3xl text-white text-center tracking-wide">PixelPulse</h1>
+						<p className="text-white/75 text-sm text-center mt-1 font-medium">Customer Ticketing System</p>
 					</div>
 
-					{showLoginError ? (
-						<div className="flex justify-center mt-4">
-							<div className="flex">
-								<TbAlertTriangle className="text-red-600 text-xl mt-1 mr-2" />{" "}
-								<p>Invalid Login</p>
-							</div>
+					{/* Form body */}
+					<div className="px-8 py-7">
+						<h2 className="font-semibold text-lg text-slate-700 mb-6">Sign in to your account</h2>
+
+						<label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Email</label>
+						<div className="flex border-b-2 border-slate-200 pb-2 pt-2 text-slate-400 focus-within:border-indigo-400 transition-colors mb-4">
+							<FaUserAlt className="text-base mt-2 mr-2 flex-shrink-0" />
+							<input
+								type="Email"
+								placeholder="Type your email"
+								className="px-1 grow py-1 outline-none bg-transparent text-slate-700 placeholder-slate-300"
+								onChange={(e) => {
+									setEmail(e.target.value);
+								}}
+							></input>
 						</div>
-					) : null}
 
-					{showPassReset ? (
-						<PassReset
-							email={email}
-							showPasswordResetSuccess={showPasswordResetSuccess}
-							setShowPasswordResetSuccess={setShowPasswordResetSuccess}
-							setShowPassReset={setShowPassReset}
-						/>
-					) : null}
+						<label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Password</label>
+						<div className="flex border-b-2 border-slate-200 pb-2 pt-2 text-slate-400 focus-within:border-indigo-400 transition-colors mb-2">
+							<MdLock className="text-lg mt-2 mr-2 flex-shrink-0" />
+							<input
+								type="Password"
+								placeholder="Type your password"
+								className="px-1 bg-white grow py-1 outline-none text-slate-700 placeholder-slate-300"
+								onChange={(e) => {
+									setPassword(e.target.value);
+								}}
+							></input>
+						</div>
 
-					{showPasswordResetSuccess ? (
-						<p className="text-sm mt-3">
-							Password reset successful. Please Login again.
-						</p>
-					) : null}
+						{!showPassReset ? (
+							<button className="w-full rounded-xl bg-gradient py-3 mt-6 text-white tracking-wider font-semibold hover:cursor-pointer hover:opacity-90 duration-200 transition-opacity shadow-md">
+								LOGIN
+							</button>
+						) : null}
+
+						<div className="flex flex-col text-sm mt-5 text-slate-400 bg-slate-50 rounded-xl p-4 border border-slate-100">
+							<p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Demo Credentials</p>
+							<p>
+								<span className="text-slate-600 font-semibold">User: </span>
+								SampleUser@pixelpulse.tech
+							</p>
+							<p className="mt-1">
+								<span className="text-slate-600 font-semibold">Pass: </span> Password3!
+							</p>
+						</div>
+
+						{showLoginError ? (
+							<div className="flex justify-center mt-4">
+								<div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-lg px-4 py-2">
+									<TbAlertTriangle className="text-red-500 text-lg flex-shrink-0" />
+									<p className="text-red-600 text-sm font-medium">Invalid email or password</p>
+								</div>
+							</div>
+						) : null}
+
+						{showPassReset ? (
+							<PassReset
+								email={email}
+								showPasswordResetSuccess={showPasswordResetSuccess}
+								setShowPasswordResetSuccess={setShowPasswordResetSuccess}
+								setShowPassReset={setShowPassReset}
+							/>
+						) : null}
+
+						{showPasswordResetSuccess ? (
+							<p className="text-sm mt-3 text-green-600 font-medium">
+								Password reset successful. Please login again.
+							</p>
+						) : null}
+					</div>
 				</div>
 			</form>
 		</div>

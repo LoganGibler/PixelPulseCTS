@@ -16,7 +16,6 @@ const ServiceReqDash = ({ userData }) => {
 
   async function fetchServiceRequests(userData) {
     const fetchedRequests = await getTeamsTickets("Service Request", userData);
-    // console.log(fetchedRequests);
     setServiceRequests(fetchedRequests);
   }
 
@@ -58,25 +57,25 @@ const ServiceReqDash = ({ userData }) => {
   }
 
   return (
-    <div className="flex flex-col md:border-l-[10px] border-slate-700 grow md:w-[390px]">
-      <div className="flex grow md:grow-0 py-2 text-white bg-slate-700 px-2">
-        <AiOutlineTeam className="text-lg mt-0.5 mr-1.5" />
-        <h1 className="font-semibold">Teams Service Requests</h1>
-        <div className="flex grow justify-end">
+    <div className="flex flex-col grow rounded-xl overflow-hidden shadow-md border border-slate-200 bg-white">
+      <div className="flex grow-0 py-3 panel-header px-3 border-b border-white/20">
+        <AiOutlineTeam className="text-lg text-white mt-0.5 mr-2" />
+        <h1 className="font-semibold text-white text-sm tracking-wide">Teams Service Requests</h1>
+        <div className="flex grow justify-end items-center gap-3">
           <BiSort
-            className="text-lg mt-[4px] mr-[1px] hover:cursor-pointer"
+            className="text-lg text-white hover:cursor-pointer hover:text-white/70 transition-colors"
             onClick={async (e) => {
               await handleSortClick(e, "time");
             }}
           />
           <BsSortUpAlt
-            className="text-xl mx-3 mt-[3px] hover:cursor-pointer"
+            className="text-xl text-white hover:cursor-pointer hover:text-white/70 transition-colors"
             onClick={async (e) => {
               await handleSortClick(e, "priority");
             }}
           />
           <GrUpdate
-            className="text-base mx-1 mt-1 hover:cursor-pointer"
+            className="text-sm text-white hover:cursor-pointer hover:text-white/70 transition-colors"
             onClick={async (e) => {
               await fetchServiceRequests(userData);
             }}
@@ -89,29 +88,29 @@ const ServiceReqDash = ({ userData }) => {
           serviceRequests.map((ticket, index) => {
             if (index % 2 === 0) {
               var elementClassname =
-                "flex flex-col px-2 py-3 border-b-[1px] hover:cursor-pointer";
+                "flex flex-col px-3 py-3 border-b border-slate-100 hover:cursor-pointer hover:bg-indigo-50 transition-colors duration-150";
             } else {
               var elementClassname =
-                "flex flex-col px-2 py-3 border-b-[1px] hover:cursor-pointer  bg-gray-200";
+                "flex flex-col px-3 py-3 border-b border-slate-100 hover:cursor-pointer bg-slate-50 hover:bg-indigo-50 transition-colors duration-150";
             }
             const ticketCompleteByDate = formatTimestamp(ticket.completeBy);
             const ticketCreationDate = formatTimestamp(ticket.dateCreated);
 
             if (ticket.status === "Active") {
               var ticketStatusClass =
-                "flex px-4 py-0.5 border-2 rounded-md bg-red-300 text-red-700 border-red-600 whitespace-nowrap";
+                "flex px-3 py-0.5 border rounded-full bg-red-100 text-red-700 border-red-300 whitespace-nowrap text-xs font-medium";
             } else if (ticket.status === "Completed") {
               var ticketStatusClass =
-                "flex px-4 py-0.5 border-2 rounded-md bg-green-300 text-green-700 border-green-600 whitespace-nowrap";
+                "flex px-3 py-0.5 border rounded-full bg-green-100 text-green-700 border-green-300 whitespace-nowrap text-xs font-medium";
             } else if (ticket.status === "Submitted") {
               var ticketStatusClass =
-                "flex px-4 py-0.5 border-2 rounded-md bg-purple-300 text-purple-700 border-purple-600 whitespace-nowrap";
+                "flex px-3 py-0.5 border rounded-full bg-purple-100 text-purple-700 border-purple-300 whitespace-nowrap text-xs font-medium";
             } else if (ticket.status === "Accepted") {
               var ticketStatusClass =
-                "flex px-4 py-0.5 border-2 rounded-md bg-yellow-300 text-yellow-700 border-yellow-600 whitespace-nowrap";
+                "flex px-3 py-0.5 border rounded-full bg-yellow-100 text-yellow-700 border-yellow-300 whitespace-nowrap text-xs font-medium";
             } else if (ticket.status === "Waiting for 3rd Party") {
               var ticketStatusClass =
-                "flex px-4 py-0.5 border-2 rounded-md bg-orange-300 text-orange-700 border-orange-600 whitespace-nowrap";
+                "flex px-3 py-0.5 border rounded-full bg-orange-100 text-orange-700 border-orange-300 whitespace-nowrap text-xs font-medium";
             }
 
             return (
@@ -120,29 +119,29 @@ const ServiceReqDash = ({ userData }) => {
                 key={index}
                 onClick={() => navigate("/ticket/" + ticket.ticketNumber)}
               >
-                <div className="flex">
-                  <p className="pr-2">#{ticket.ticketNumber}</p>
-                  <p className="truncated-text-sm font-semibold pr-2">
+                <div className="flex items-start">
+                  <p className="pr-2 text-slate-400 font-medium whitespace-nowrap">#{ticket.ticketNumber}</p>
+                  <p className="truncated-text-sm font-semibold pr-2 text-slate-800">
                     {ticket.title}
                   </p>
-                  <div className="flex justify-end grow">
+                  <div className="flex justify-end grow flex-shrink-0">
                     <div>
                       <p className={ticketStatusClass}>{ticket.status}</p>
                     </div>
                   </div>
                 </div>
-                <div className="text-xs mt-[8px] px-2 flex py-1">
+                <div className="text-xs mt-2 px-1 flex py-1 items-center">
                   {ticket.userAssigned === "" ? (
-                    <p className="text-blue-700 pr-5">
+                    <p className="text-indigo-500 pr-5">
                       Submitter:{" "}
-                      <span className="text-black font-semibold">
+                      <span className="text-slate-700 font-semibold">
                         {ticket.submitter}
                       </span>
                     </p>
                   ) : (
-                    <p className="text-blue-700 pr-5 overflow-hidden max-w-[155px] md:max-w-[300px] whitespace-nowrap text-ellipsis">
+                    <p className="text-indigo-500 pr-5 overflow-hidden max-w-[155px] md:max-w-[300px] whitespace-nowrap text-ellipsis">
                       Assigned to:
-                      <span className="text-black font-semibold ml-1">
+                      <span className="text-slate-700 font-semibold ml-1">
                         {ticket.userAssigned}
                       </span>
                     </p>
@@ -151,7 +150,7 @@ const ServiceReqDash = ({ userData }) => {
                   {ticket.userAssigned === "" ? (
                     <div className="flex grow justify-end">
                       <button
-                        className="text-sm px-4 border-[1px] font-semibold rounded-lg bg-gradient text-white hover:cursor-pointer"
+                        className="px-4 py-1 font-semibold rounded-full bg-gradient text-white text-xs hover:cursor-pointer hover:opacity-90 transition-opacity shadow-sm"
                         onClick={async (e) => {
                           e.stopPropagation();
                           await claimTicket(ticket._id, userData);
@@ -166,22 +165,20 @@ const ServiceReqDash = ({ userData }) => {
                   {ticket.userAssigned ? (
                     !ticket.completeBy ? (
                       <div className="flex grow justify-end">
-                        <p className="text-blue-700 whitespace-nowrap">
+                        <p className="text-indigo-500 whitespace-nowrap">
                           Created:{" "}
-                          <span className="text-black font-semibold">
+                          <span className="text-slate-700 font-semibold">
                             {ticketCreationDate}
                           </span>
                         </p>
                       </div>
                     ) : (
                       <div className="flex grow justify-end">
-                        {" "}
-                        <div className="text-blue-700 whitespace-nowrap flex">
+                        <div className="text-indigo-500 whitespace-nowrap flex">
                           <p className="hidden md:flex whitespace-nowrap">
-                            Complete By:
+                            Complete By:&nbsp;
                           </p>
-
-                          <p className="text-black font-semibold whitespace-nowrap">
+                          <p className="text-slate-700 font-semibold whitespace-nowrap">
                             {ticketCompleteByDate}
                           </p>
                         </div>
@@ -193,8 +190,8 @@ const ServiceReqDash = ({ userData }) => {
             );
           })
         ) : (
-          <div className="flex justify-center mt-4">
-            <p>There are no service requests assigned to your team.</p>
+          <div className="flex justify-center mt-8 text-slate-400 text-sm">
+            <p>No service requests assigned to your team.</p>
           </div>
         )}
       </div>
